@@ -6,20 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Tazrian & Tashfiha's Wedding Invitation</title>
 
-    <!-- ─── FONTS: EB Garamond and MonteCarlo are imported here ─── -->
+    <!-- ─── FONTS: EB Garamond, MonteCarlo, Cinzel, Montserrat ─── -->
+    <!-- To change fonts: replace the href URL with your chosen Google Font link -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=MonteCarlo&display=swap"
-        rel="stylesheet" />
+            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=MonteCarlo&display=swap"
+            rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
-        /* ─── Variables: YOU CAN CHANGE YOUR THEME COLORS HERE ─── */
+        /* ─── Variables ─── */
+        /* Change the HEX codes below to modify the entire colour scheme */
         :root {
-            --dark-green: #1c3b2b; /* Change this to change the dark background color */
-            --cream: #f4f1ea;      /* Background for the Holud/Wedding details pages */
-            --gold: #c3a475;       /* Accent color for titles and icons */
+            --dark-green: #1c3b2b;
+            --cream: #f4f1ea;
+            --gold: #c3a475;
             --text-light: #ffffff;
             --text-dark: #2c3531;
+
+            /* Page 2 (Holud) Palette */
+            --p2-bg: #fdf2a7;      /* Primary Light Yellow */
+            --p2-holud-orange: #d35400; /* Orangish for "Holud" */
+            --p2-pill-bg: #e6b422; /* Warm Gold for Location Pill */
         }
 
         * {
@@ -172,7 +179,7 @@
             background-color: var(--dark-green);
             color: white;
             text-align: center;
-            font-family: 'EB Garamond', serif; /* PRIMARY FONT */
+            font-family: 'EB Garamond', serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -180,71 +187,64 @@
             padding: 20px;
         }
 
-        /* INNER FRAME BORDER */
         .p1-frame {
             position: absolute;
-            top: 30px;    /* ADJUST: Border distance from top */
-            left: 20px;   /* ADJUST: Border distance from left */
-            right: 20px;  /* ADJUST: Border distance from right */
-            bottom: 30px; /* ADJUST: Border distance from bottom */
-            border: 1px solid rgba(255, 255, 255, 0.15); /* ADJUST: Border color/transparency */
+            top: 30px;
+            left: 20px;
+            right: 20px;
+            bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             pointer-events: none;
             z-index: 1;
         }
 
-        /* PIGEON IMAGE (Top Right) */
         .p1-dove {
             position: absolute;
-            top: 5px;     /* ADJUST: Pigeon top position */
-            right: 13px;   /* ADJUST: Pigeon right position */
-            width: 120px; /* ADJUST: Pigeon size */
+            top: 5px;
+            right: 13px;
+            width: 120px;
             z-index: 3;
             pointer-events: none;
         }
 
-        /* BISMILLAH: Text at the very top */
         .p1-bismillah {
-            font-size: 0.65rem;   /* ADJUST: Bismillah font size */
-            margin-top: 90px;     /* ADJUST: Top margin to match design spacing */
-            margin-bottom: 7px;  /* ADJUST: Spacing below Bismillah */
+            font-size: 0.65rem;
+            margin-top: 90px;
+            margin-bottom: 7px;
             opacity: 0.95;
             z-index: 2;
             letter-spacing: 0.3px;
         }
 
-        /* INVITE MESSAGE: Middle top */
         .p1-invite-text {
-            font-size: 0.90rem;   /* ADJUST: Invitation text size */
+            font-size: 0.90rem;
             line-height: 1.3;
-            margin-bottom: 33px;  /* ADJUST: Gap between invite text and Groom name */
+            margin-bottom: 33px;
             padding: 0 5px;
             z-index: 2;
             font-weight: 400;
         }
 
-        /* NAMES: MonteCarlo Font */
         .p1-name {
-            font-family: 'MonteCarlo', cursive; /* SECONDARY FONT */
-            font-size: 2.6rem;      /* ADJUST: Groom/Bride name font size */
-            margin-bottom: 0px;   /* ADJUST: Space below name */
+            font-family: 'MonteCarlo', cursive;
+            font-size: 2.6rem;
+            margin-bottom: 0px;
             font-weight: 120;
             z-index: 2;
         }
 
-        /* PARENTAGE: EB Garamond */
         .p1-parentage {
-            font-size: 0.85rem;   /* ADJUST: Parents text font size */
-            margin-bottom: 25px;  /* ADJUST: Spacing below parentage */
+            font-size: 0.85rem;
+            margin-bottom: 25px;
             opacity: 0.70;
             z-index: 2;
         }
 
-        /* AND SEPARATOR: Line with AND text */
         .p1-and-container {
             display: flex;
             align-items: center;
-            width: 88%;           /* ADJUST: Separator line width */
-            margin: 0 auto 10px;  /* ADJUST: Distance to next section */
+            width: 88%;
+            margin: 0 auto 10px;
             z-index: 2;
         }
 
@@ -262,21 +262,19 @@
             font-weight: 300;
         }
 
-        /* FLOWER IMAGE (Bottom Left) */
         .p1-floral {
             position: absolute;
-            bottom: -40px;  /* ADJUST: Flower distance from bottom */
-            left: -15px;   /* ADJUST: Flower distance from left */
-            width: 120px;  /* ADJUST: Flower bouquet size */
+            bottom: -40px;
+            left: -15px;
+            width: 120px;
             z-index: 3;
             pointer-events: none;
         }
 
-        /* MUSIC SECTION (Bottom Right) */
         .p1-music-box {
             position: absolute;
-            bottom: 35px;  /* ADJUST: Music box distance from bottom */
-            right: 35px;   /* ADJUST: Music box distance from right edge */
+            bottom: 35px;
+            right: 35px;
             text-align: left;
             z-index: 3;
             max-width: 160px;
@@ -319,6 +317,134 @@
         @keyframes musicFill { 0% { width: 0%; } 100% { width: 100%; } }
         @keyframes musicDot { 0% { left: 0%; } 100% { left: 100%; } }
 
+        /* ─── PAGE 2: HOLUD (FIXED DESIGN) ─── */
+        #page2 {
+            background-color: var(--p2-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .p2-inner-card {
+            width: 100%;
+            height: 95%;
+            background: url('Wedding/2ndCardHennaBackground.jpeg') no-repeat center center;
+            background-size: cover;
+            border-radius: 40px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 2px 2px;
+            font-family: 'EB Garamond', serif;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .p2-title {
+            font-family: 'MonteCarlo', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 0px;
+            font-weight: normal;
+            color: var(--p2-holud-orange);
+            line-height: 0.7;
+        }
+
+        .p2-subtitle {
+            font-style: italic;
+            font-size: 0.7rem;
+            margin-top: 15px;
+            padding: 0 10px;
+            line-height: 0.5;
+            color: #333;
+        }
+
+        .p2-holud-of {
+            font-size: 0.9rem;
+            margin-top: 4px;
+            color: #333;
+        }
+
+        .p2-groom-name {
+            font-family: 'MonteCarlo', cursive;
+            font-size: 2.2rem;
+            color: #000;
+            margin: 5px 0 6px;
+            line-height: 1;
+        }
+
+        .p2-details {
+            font-size: 0.6rem;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        .p2-dress-section {
+            width: 48%;
+            margin-top: auto;
+            margin-bottom: 200px;
+        }
+
+        .p2-dress-header {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 7px;
+        }
+
+        .p2-dress-header span {
+            font-size: 0.8rem;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        .p2-dress-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .p2-palette-img {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .p2-footer {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .p2-loc-title {
+            font-family: 'MonteCarlo', cursive;
+            font-size: 1rem;
+            color: #000;
+            margin-bottom: 1px;
+        }
+
+        .p2-loc-pill {
+            background: var(--p2-pill-bg);
+            color: white;
+            padding: 3px 9px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .p2-loc-pill span {
+            font-family: 'MonteCarlo', cursive;
+            font-size: 1rem;
+        }
+
         /* ─── STYLES FOR OTHER PAGES ─── */
         .bg-cream { background-color: var(--cream); color: var(--text-dark); }
         .title-serif { font-family: 'Cinzel', serif; letter-spacing: 2px; text-align: center; }
@@ -339,177 +465,188 @@
 
 <body>
 
-    <!-- ─── INTRO ENVELOPE ─── -->
-    <div class="envelope-wrapper" id="envelopeWrapper">
-        <div class="envelope" id="mainEnvelope">
-            <div class="envelope-flap"></div>
-            <div class="mini-card">
-                <h3>Tazrian &amp; Tashfiha</h3>
-                <p>INVITES YOU TO OUR WEDDING</p>
+<!-- ─── INTRO ENVELOPE ─── -->
+<!-- Change the text inside .mini-card to update the envelope preview -->
+<div class="envelope-wrapper" id="envelopeWrapper">
+    <div class="envelope" id="mainEnvelope">
+        <div class="envelope-flap"></div>
+        <div class="mini-card">
+            <h3>Tazrian &amp; Tashfiha</h3>
+            <p>INVITES YOU TO OUR WEDDING</p>
+        </div>
+        <div class="envelope-pocket"></div>
+    </div>
+    <div class="tap-hint"><span>Tap to Open</span></div>
+</div>
+
+<!-- ─── MAIN CARD CONTAINER ─── -->
+<div class="card-wrapper" id="cardWrapper">
+    <div class="card-track" id="cardTrack">
+
+        <!-- PAGE 1: INTRO -->
+        <!-- Change the text inside <p> and <h1> tags to update names, parents, etc. -->
+        <!-- Replace image src attributes with your own images (keep in Wedding/ folder) -->
+        <section class="page" id="page1">
+            <div class="p1-frame"></div>
+            <img src="Wedding/Pigion for firstpage.png" class="p1-dove" alt="pigeon" />
+            <p class="p1-bismillah">In the name of Allah, the Most Gracious, the Most Merciful,</p>
+            <p class="p1-invite-text">We invite you to celebrate the love, laughter,<br>and happily ever after of</p>
+            <h1 class="p1-name">Mohammad Tazrian</h1>
+            <p class="p1-parentage">Son of Mohammed Musa & Nasrin Sultana</p>
+            <div class="p1-and-container">
+                <div class="p1-and-line"></div>
+                <span class="p1-and-text">AND</span>
+                <div class="p1-and-line"></div>
             </div>
-            <div class="envelope-pocket"></div>
-        </div>
-        <div class="tap-hint"><span>Tap to Open</span></div>
+            <h1 class="p1-name">Tashfiha Faruk</h1>
+            <p class="p1-parentage">Daughter of Mohammad Faruk & Rasheda Begum</p>
+            <img src="Wedding/FlowerForFirstPage.png" class="p1-floral" alt="flowers" />
+            <div class="p1-music-box">
+                <p>Thinking Out Loud<br>by Ed Sheeran</p>
+                <div class="p1-music-bar-container">
+                    <div class="p1-music-bar-fill"></div>
+                    <div class="p1-music-dot"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: HOLUD (Corrected Alignment & Palette) -->
+        <!-- Change text, event details, and image paths as needed -->
+        <section class="page" id="page2">
+            <div class="p2-inner-card">
+                <h1 class="p2-title">Holud</h1>
+                <p class="p2-subtitle">Yellow hues and joyous tunes, join us for the Gaye</p>
+                <p class="p2-holud-of">Holud of</p>
+                <h2 class="p2-groom-name">Mohammad Tazrian</h2>
+
+                <div class="p2-details">
+                    <p>Event Date: 4th September, 2026</p>
+                    <p>Time: 8.00 P.M</p>
+                    <p>Location: Baganbari,</p>
+                </div>
+
+                <div class="p2-dress-section">
+                    <div class="p2-dress-header">
+                        <div class="p2-dress-line"></div>
+                        <span>Dress Colors</span>
+                        <div class="p2-dress-line"></div>
+                    </div>
+                    <img src="Wedding/2ndpageColorPalatte.png" alt="Color Palette" class="p2-palette-img" />
+                </div>
+            </div>
+
+            <div class="p2-footer">
+                <span class="p2-loc-title">Location</span>
+                <div class="p2-loc-pill">
+                    <i class="fas fa-map-marker-alt" style="font-size: 1rem;"></i>
+                    <span>Baganbari on Map</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: AKHT -->
+        <!-- Update heading, event title, time, and location -->
+        <section class="page" id="page3" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
+            <h2 class="title-serif" style="color: var(--gold); margin-bottom: 25px;">02 • AKHT</h2>
+            <div class="event-card-box" style="border-color: var(--gold);">
+                <h3 style="color: var(--gold); margin-bottom: 10px; font-family: 'Cinzel', serif;">NIKAH CEREMONY</h3>
+                <p style="font-weight: 600; color: var(--gold); font-size: 1rem;">4:30 PM</p>
+                <p style="margin: 10px 0 5px; font-weight: 500;">Suhrawardy Mosque Garden</p>
+            </div>
+        </section>
+
+        <!-- PAGE 4: WEDDING -->
+        <!-- Update heading, event title, time, and location -->
+        <section class="page bg-cream" id="page4" style="padding: 45px 30px;">
+            <h2 class="title-serif" style="color: var(--dark-green); margin-bottom: 25px;">03 • WEDDING</h2>
+            <div class="event-card-box">
+                <h3 style="color: var(--dark-green); margin-bottom: 10px; font-family: 'Cinzel', serif;">THE BRIDE'S RECEPTION</h3>
+                <p style="font-weight: 600; color: var(--dark-green); font-size: 1rem;">8:00 PM</p>
+                <p style="margin: 10px 0 5px; font-weight: 500;">Grand Heritage Ball Room</p>
+            </div>
+        </section>
+
+        <!-- PAGE 5: RSVP -->
+        <!-- Change placeholder, button text, and alert message -->
+        <section class="page" id="page5" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
+            <div style="background: var(--cream); color: var(--text-dark); border-radius: 25px; padding: 30px 20px; text-align: center;">
+                <h2 class="title-serif" style="color: var(--dark-green); font-size: 1.6rem; margin-bottom: 10px;">RSVP</h2>
+                <input type="text" placeholder="Your Full Name" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #ddd;" />
+                <button style="width: 100%; padding: 15px; background: var(--dark-green); color: white; border: none; border-radius: 10px; font-weight: 600;" onclick="alert('Thank you!')">CONFIRM</button>
+            </div>
+        </section>
     </div>
 
-    <!-- ─── MAIN CARD CONTAINER ─── -->
-    <div class="card-wrapper" id="cardWrapper">
-        <div class="card-track" id="cardTrack">
-
-            <!-- ─── PAGE 1: THE FIRST DIGITAL CARD (Refined UI) ─── -->
-            <section class="page" id="page1">
-                <!-- Inner border line -->
-                <div class="p1-frame"></div>
-
-                <!-- TOP RIGHT: Pigeon Image -->
-                <img src="Wedding/Pigion for firstpage.png" class="p1-dove" alt="pigeon" />
-
-                <!-- BISMILLAH: You can change the top text here -->
-                <p class="p1-bismillah">In the name of Allah, the Most Gracious, the Most Merciful,</p>
-
-                <!-- INVITE MESSAGE: You can change the invitation text here -->
-                <p class="p1-invite-text">We invite you to celebrate the love, laughter,<br>and happily ever after of</p>
-
-                <!-- GROOM Section -->
-                <h1 class="p1-name">Mohammad Tazrian</h1>
-                <p class="p1-parentage">Son of Mohammed Musa & Nasrin Sultana</p>
-
-                <!-- Separator Line with "AND" -->
-                <div class="p1-and-container">
-                    <div class="p1-and-line"></div>
-                    <span class="p1-and-text">AND</span>
-                    <div class="p1-and-line"></div>
-                </div>
-
-                <!-- BRIDE Section -->
-                <h1 class="p1-name">Tashfiha Faruk</h1>
-                <p class="p1-parentage">Daughter of Mohammad Faruk & Rasheda Begum</p>
-
-                <!-- BOTTOM LEFT: Flower Bouquet Image -->
-                <img src="Wedding/FlowerForFirstPage.png" class="p1-floral" alt="flowers" />
-
-                <!-- BOTTOM RIGHT: Music / Song Info UI -->
-                <div class="p1-music-box">
-                    <p>Thinking Out Loud<br>by Ed Sheeran</p>
-                    <div class="p1-music-bar-container">
-                        <div class="p1-music-bar-fill"></div>
-                        <div class="p1-music-dot"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PAGE 2: HOLUD -->
-            <section class="page bg-cream" id="page2">
-                <div style="padding: 45px 30px;">
-                    <h2 class="title-serif" style="color: var(--dark-green); margin-bottom: 25px;">01 • HOLUD</h2>
-                    <div class="event-card-box">
-                        <h3 style="color: var(--dark-green); margin-bottom: 10px; font-family: 'Cinzel', serif;">GAYE HOLUD</h3>
-                        <p style="font-weight: 600; color: var(--dark-green); font-size: 1rem;">7:00 PM</p>
-                        <p style="margin: 10px 0 5px; font-weight: 500;">The Twilight Pavilion</p>
-                        <p style="font-size: 0.8rem; opacity: 0.7;">Gulshan Avenue, Dhaka</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PAGE 3: AKHT -->
-            <section class="page" id="page3" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
-                <h2 class="title-serif" style="color: var(--gold); margin-bottom: 25px;">02 • AKHT</h2>
-                <div class="event-card-box" style="border-color: var(--gold);">
-                    <h3 style="color: var(--gold); margin-bottom: 10px; font-family: 'Cinzel', serif;">NIKAH CEREMONY</h3>
-                    <p style="font-weight: 600; color: var(--gold); font-size: 1rem;">4:30 PM</p>
-                    <p style="margin: 10px 0 5px; font-weight: 500;">Suhrawardy Mosque Garden</p>
-                </div>
-            </section>
-
-            <!-- PAGE 4: WEDDING -->
-            <section class="page bg-cream" id="page4" style="padding: 45px 30px;">
-                <h2 class="title-serif" style="color: var(--dark-green); margin-bottom: 25px;">03 • WEDDING</h2>
-                <div class="event-card-box">
-                    <h3 style="color: var(--dark-green); margin-bottom: 10px; font-family: 'Cinzel', serif;">THE BRIDE'S RECEPTION</h3>
-                    <p style="font-weight: 600; color: var(--dark-green); font-size: 1rem;">8:00 PM</p>
-                    <p style="margin: 10px 0 5px; font-weight: 500;">Grand Heritage Ball Room</p>
-                </div>
-            </section>
-
-            <!-- PAGE 5: RSVP -->
-            <section class="page" id="page5" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
-                <div style="background: var(--cream); color: var(--text-dark); border-radius: 25px; padding: 30px 20px; text-align: center;">
-                    <h2 class="title-serif" style="color: var(--dark-green); font-size: 1.6rem; margin-bottom: 10px;">RSVP</h2>
-                    <input type="text" placeholder="Your Full Name" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #ddd;" />
-                    <button style="width: 100%; padding: 15px; background: var(--dark-green); color: white; border: none; border-radius: 10px; font-weight: 600;" onclick="alert('Thank you!')">CONFIRM</button>
-                </div>
-            </section>
-        </div>
-
-        <div class="indicators" id="indicators">
-            <button class="indicator-dot active" data-index="0"></button>
-            <button class="indicator-dot" data-index="1"></button>
-            <button class="indicator-dot" data-index="2"></button>
-            <button class="indicator-dot" data-index="3"></button>
-            <button class="indicator-dot" data-index="4"></button>
-        </div>
+    <div class="indicators" id="indicators">
+        <button class="indicator-dot active" data-index="0"></button>
+        <button class="indicator-dot" data-index="1"></button>
+        <button class="indicator-dot" data-index="2"></button>
+        <button class="indicator-dot" data-index="3"></button>
+        <button class="indicator-dot" data-index="4"></button>
     </div>
+</div>
 
-    <!-- BACKGROUND AUDIO: Starts playing after user clicks the envelope -->
-    <audio id="bgAudio" loop preload="auto">
-        <source src="Wedding/Perfect By Ed Sheeran.mp3" type="audio/mpeg" />
-    </audio>
+<!-- BACKGROUND AUDIO -->
+<!-- Replace the src with your own audio file -->
+<audio id="bgAudio" loop preload="auto">
+    <source src="Wedding/Perfect By Ed Sheeran.mp3" type="audio/mpeg" />
+</audio>
 
-    <script>
-        (function () {
-            const envelopeWrapper = document.getElementById('envelopeWrapper');
-            const mainEnvelope = document.getElementById('mainEnvelope');
-            const cardWrapper = document.getElementById('cardWrapper');
-            const track = document.getElementById('cardTrack');
-            const dots = document.querySelectorAll('.indicator-dot');
-            const bgAudio = document.getElementById('bgAudio');
+<script>
+    (function () {
+        const envelopeWrapper = document.getElementById('envelopeWrapper');
+        const mainEnvelope = document.getElementById('mainEnvelope');
+        const cardWrapper = document.getElementById('cardWrapper');
+        const track = document.getElementById('cardTrack');
+        const dots = document.querySelectorAll('.indicator-dot');
+        const bgAudio = document.getElementById('bgAudio');
 
-            let currentIndex = 0;
-            const totalPages = 5;
-            let isTransitioning = false;
-            let isCardReady = false;
+        let currentIndex = 0;
+        const totalPages = 5;
+        let isTransitioning = false;
+        let isCardReady = false;
 
-            // Open Envelope Interaction
-            mainEnvelope.addEventListener('click', () => {
-                envelopeWrapper.classList.add('open');
-                bgAudio.play().catch(() => { /* Handles browsers that block autoplay until interaction */ });
-                setTimeout(() => {
-                    envelopeWrapper.classList.add('fade-out');
-                    cardWrapper.classList.add('visible');
-                    setTimeout(() => { isCardReady = true; }, 600);
-                }, 1200);
+        // Open Envelope
+        mainEnvelope.addEventListener('click', () => {
+            envelopeWrapper.classList.add('open');
+            bgAudio.play().catch(() => {});
+            setTimeout(() => {
+                envelopeWrapper.classList.add('fade-out');
+                cardWrapper.classList.add('visible');
+                setTimeout(() => { isCardReady = true; }, 600);
+            }, 1200);
+        });
+
+        // Smooth Page Navigation
+        function goTo(index) {
+            if (!isCardReady || isTransitioning) return;
+            if (index < 0) index = 0;
+            if (index >= totalPages) index = totalPages - 1;
+            isTransitioning = true;
+            currentIndex = index;
+            track.style.transform = `translateX(${-index * 20}%)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+            setTimeout(() => { isTransitioning = false; }, 600);
+        }
+
+        // Click Dots to Navigate
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const idx = parseInt(dot.getAttribute('data-index'));
+                if (idx !== currentIndex) goTo(idx);
             });
+        });
 
-            // Smooth Page Navigation Function
-            function goTo(index) {
-                if (!isCardReady || isTransitioning) return;
-                if (index < 0) index = 0;
-                if (index >= totalPages) index = totalPages - 1;
-                isTransitioning = true;
-                currentIndex = index;
-                track.style.transform = `translateX(${-index * 20}%)`;
-                dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-                setTimeout(() => { isTransitioning = false; }, 600);
-            }
-
-            // Click Dots to Navigate
-            dots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    const idx = parseInt(dot.getAttribute('data-index'));
-                    if (idx !== currentIndex) goTo(idx);
-                });
-            });
-
-            // Swipe Navigation for Mobile
-            let startX = 0;
-            cardWrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive: true});
-            cardWrapper.addEventListener('touchend', e => {
-                const deltaX = e.changedTouches[0].clientX - startX;
-                if (Math.abs(deltaX) < 50) return;
-                if (deltaX < 0) goTo(currentIndex + 1);
-                else goTo(currentIndex - 1);
-            }, {passive: true});
-        })();
-    </script>
+        // Swipe Navigation for Mobile
+        let startX = 0;
+        cardWrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive: true});
+        cardWrapper.addEventListener('touchend', e => {
+            const deltaX = e.changedTouches[0].clientX - startX;
+            if (Math.abs(deltaX) < 50) return;
+            if (deltaX < 0) goTo(currentIndex + 1);
+            else goTo(currentIndex - 1);
+        }, {passive: true});
+    })();
+</script>
 </body>
 </html>
