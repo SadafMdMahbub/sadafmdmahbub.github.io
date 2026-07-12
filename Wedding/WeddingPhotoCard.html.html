@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Jazrian & Jashfia · Wedding Invitation</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        /* ─── Reset & Variables ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-green: #1c3b2b;
+            --cream: #f4f1ea;
+            --gold: #c3a475;
+            --text-dark: #2c3531;
+            --text-light: #ffffff;
+            --tab-bg: #dcdad4;
+        }
+
+        body {
+            background-color: #faf7f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ─── ENVELOPE INTRO SCENE ─── */
+        .envelope-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #faf7f2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            z-index: 100;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background: #ffffff;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 2s ease;
+        }
+
+        .envelope::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 25px;
+            height: 80%;
+            background: var(--tab-bg);
+            border-radius: 0 12px 12px 0;
+            z-index: -1;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            clip-path: polygon(0 0, 50% 55%, 100% 0);
+            transform-origin: top center;
+            z-index: 3;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fdfdfd;
+            clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 55%);
+            z-index: 2;
+            border-radius: 0 0 16px 16px;
+            box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Letter inside envelope sliding out */
+        .mini-card {
+            position: absolute;
+            top: 10px;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background: var(--dark-green);
+            border-radius: 12px;
+            z-index: 1;
+            transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .mini-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .mini-card p {
+            font-size: 0.6rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* Animation Trigger States */
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .envelope-wrapper.open .mini-card {
+            transform: translateY(-130px) scale(1.05);
+            z-index: 4;
+        }
+
+        .envelope-wrapper.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* ─── Tap to Open Hint ─── */
+        .tap-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+            animation: tapPulse 1.8s ease-in-out infinite;
+            z-index: 101;
+        }
+
+        .tap-hint span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            color: var(--text-dark);
+            opacity: 0.55;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .tap-hint-arrow {
+            width: 1px;
+            height: 18px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            margin: 0 auto;
+        }
+
+        @keyframes tapPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: translateY(5px);
+            }
+        }
+
+        .envelope-wrapper.open .tap-hint {
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+
+        /* ─── MAIN CARD CONTAINER ─── */
+        .card-wrapper {
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 9 / 16;
+            background: var(--dark-green);
+            border-radius: 28px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .card-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+
+        /* ─── Swipe Track (5 Pages Now) ─── */
+        .card-track {
+            display: flex;
+            height: 100%;
+            width: 500%;
+            /* 5 Pages = 500% */
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+
+        .page {
+            flex: 0 0 20%;
+            /* 100% / 5 = 20% */
+            height: 100%;
+            padding: 35px 30px 35px;
+            overflow-y: auto;
+            scrollbar-width: none;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .page::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Elegant Frame Borders */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(195, 164, 117, 0.2);
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Page Background Styles */
+        .bg-dark {
+            background-color: var(--dark-green);
+            color: var(--text-light);
+        }
+
+        .bg-cream {
+            background-color: var(--cream);
+            color: var(--text-dark);
+        }
+
+        .bg-cream::before {
+            border-color: rgba(28, 59, 43, 0.15);
+        }
+
+        /* Hide frame border on page1 full-bleed layout */
+        #page1::before {
+            display: none;
+        }
+
+        /* ─── Page 1 Hero Design ─── */
+        .p1-dove {
+            position: absolute;
+            top: -18px;
+            right: -20px;
+            width: 155px;
+            z-index: 3;
+            pointer-events: none;
+            transform: scaleX(-1);
+            /* face inward toward card center */
+            filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
+        }
+
+        .p1-floral {
+            position: absolute;
+            bottom: 48px;
+            left: -20px;
+            width: 185px;
+            z-index: 2;
+            pointer-events: none;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+        }
+
+        .p1-frame-line {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.28);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .p1-frame-top {
+            top: 25px;
+            left: 25px;
+            right: 25px;
+            height: 1px;
+        }
+
+        .p1-frame-bottom {
+            bottom: 25px;
+            left: 25px;
+            right: 25px;
+            height: 1px;
+        }
+
+        .p1-frame-left {
+            left: 25px;
+            top: 50px;
+            bottom: 50px;
+            width: 1px;
+        }
+
+        .p1-frame-right {
+            right: 25px;
+            top: 50px;
+            bottom: 50px;
+            width: 1px;
+        }
+
+        .p1-invite-text {
+            font-family: 'Pinyon Script', cursive;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 1.45rem;
+            line-height: 1.55;
+            text-align: center;
+            margin-top: 130px;
+            /* push below the dove */
+            padding: 0 28px;
+            /* keep text away from card edges */
+            width: 100%;
+            z-index: 2;
+            position: relative;
+        }
+
+        .p1-name {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.8rem;
+            color: #ffffff;
+            text-align: center;
+            margin: 15px 0 2px;
+            width: 100%;
+            padding: 0 28px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .p1-parentage {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.72);
+            text-align: center;
+            line-height: 1.4;
+            width: 100%;
+            padding: 0 28px;
+            z-index: 2;
+            position: relative;
+            margin-top: -4px;
+        }
+
+        .p1-and {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.0rem;
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            margin: 15px 0;
+            z-index: 2;
+            position: relative;
+        }
+
+        .p1-music {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 3;
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        .p1-music p {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.8px;
+            line-height: 1.6;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .p1-music-bar {
+            width: 140px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 8px auto 0;
+            border-radius: 2px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .p1-music-bar::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gold);
+            animation: musicFill 3s linear infinite;
+            border-radius: 2px;
+        }
+
+        .p1-music-bar::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: musicThumb 3s linear infinite;
+            z-index: 4;
+        }
+
+        @keyframes musicFill {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes musicThumb {
+            0% {
+                left: 0%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Pulsing music icon */
+        .p1-music-icon {
+            animation: musicPulse 1.2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes musicPulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Decor Elements (legacy kept for other pages) */
+        .dove-graphic {
+            display: none;
+        }
+
+        .floral-bottom {
+            width: 80px;
+            margin: 15px auto 0;
+            opacity: 0.9;
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        /* Typography */
+        .title-serif {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .script-font {
+            font-family: 'Pinyon Script', cursive;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        .hero-names h1 {
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin: 5px 0;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .hero-names span {
+            font-size: 2.6rem;
+            display: block;
+        }
+
+        .date-badge {
+            border-top: 1px solid var(--gold);
+            border-bottom: 1px solid var(--gold);
+            padding: 8px 24px;
+            margin: 18px 0;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-align: center;
+        }
+
+        .event-card-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(195, 164, 117, 0.25);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .bg-cream .event-card-box {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(28, 59, 43, 0.15);
+        }
+
+        .event-card-box h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+        }
+
+        .bg-cream .event-card-box h3 {
+            color: var(--dark-green);
+        }
+
+        .event-card-box p {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            opacity: 0.85;
+        }
+
+        .btn-map {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 18px;
+            background: var(--gold);
+            color: var(--dark-green);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        .bg-cream .btn-map {
+            background: var(--dark-green);
+            color: #white;
+        }
+
+        /* Music Bar Component */
+        .mini-player {
+            width: 100%;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 12px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .mini-player p {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .player-bar-visual {
+            width: 60%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px auto;
+            position: relative;
+        }
+
+        .player-bar-progress {
+            width: 40%;
+            height: 100%;
+            background: var(--gold);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* RSVP UI Container */
+        .inner-rsvp-container {
+            background: var(--cream);
+            color: var(--text-dark);
+            border-radius: 20px;
+            padding: 24px 18px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .inner-rsvp-container h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--dark-green);
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        .inner-rsvp-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .btn-submit-rsvp {
+            width: 100%;
+            padding: 12px;
+            background: var(--dark-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation Indicators */
+        .indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 40px;
+        }
+
+        .indicator-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .indicator-dot.active {
+            background: var(--gold);
+            width: 20px;
+            border-radius: 6px;
+        }
+
+        .swipe-hint {
+            position: absolute;
+            bottom: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            z-index: 5;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 460px) {
+            .card-wrapper {
+                border-radius: 20px;
+            }
+
+            .page {
+                padding: 30px 20px 30px;
+            }
+
+            .hero-names h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-names span {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope" id="mainEnvelope">
+            <div class="envelope-flap"></div>
+            <div class="mini-card">
+                <h3>Tazrian &amp; Tashfia</h3>
+                <p>YOU ARE INVITED</p>
+            </div>
+            <div class="envelope-pocket"></div>
+        </div>
+        <!-- Tap to Open hint shown below envelope on page load -->
+        <div class="tap-hint">
+            <div class="tap-hint-arrow"></div>
+            <span>Tap to Open</span>
+        </div>
+    </div>
+
+    <div class="card-wrapper" id="cardWrapper">
+        <div class="card-track" id="cardTrack">
+
+            <section class="page bg-dark" id="page1" style="padding: 0; overflow: hidden;">
+                <!-- Decorative Frame Lines -->
+                <div class="p1-frame-line p1-frame-top"></div>
+                <div class="p1-frame-line p1-frame-bottom"></div>
+                <div class="p1-frame-line p1-frame-left"></div>
+                <div class="p1-frame-line p1-frame-right"></div>
+
+                <!-- Dove top-right -->
+                <img src="Pigion for firstpage.png" class="p1-dove" alt="dove" />
+
+                <!-- Invitation text -->
+                <p class="p1-invite-text">We invite you to celebrate the love,<br>laughter,<br>and happily ever after of
+                </p>
+
+                <!-- Tazrian -->
+                <p class="p1-name">Tazrian</p>
+                <p class="p1-parentage">son of Musa<br>Nasrin</p>
+
+                <!-- and -->
+                <p class="p1-and">and</p>
+
+                <!-- Tashfia -->
+                <p class="p1-name">Tashfia</p>
+                <p class="p1-parentage">Daughter of X and Y</p>
+
+                <!-- Floral bottom-left -->
+                <img src="FlowerForFirstPage.png" class="p1-floral" alt="flowers" />
+
+                <!-- Music bottom-center -->
+                <div class="p1-music">
+                    <p>Perfect<br><i class="fas fa-music p1-music-icon"></i> by Ed Sheeran</p>
+                    <div class="p1-music-bar"></div>
+                </div>
+            </section>
+
+            <section class="page bg-cream" id="page2">
+                <h2 class="title-serif" style="color: var(--dark-green); margin-bottom: 20px;">01 • HOLUD</h2>
+                <div class="event-card-box">
+                    <h3>GAYE HOLUD</h3>
+                    <p style="font-weight: 500; color: var(--dark-green);">7:00 PM</p>
+                    <p style="margin: 8px 0 4px;">The Twilight Pavilion</p>
+                    <p style="font-size: 0.75rem; opacity: 0.8;">Gulshan Avenue, Dhaka</p>
+                    <a href="#" class="btn-map" onclick="event.preventDefault();"><i class="fas fa-map-marker-alt"></i>
+                        MAP LOCATION</a>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <h4 class="title-serif" style="font-size: 0.8rem; margin-bottom: 5px;">DRESS CODE</h4>
+                    <p style="font-style: italic; font-size: 0.8rem;">Bright Festive Yellows &amp; Oranges</p>
+                </div>
+            </section>
+
+            <section class="page bg-dark" id="page3">
+                <h2 class="title-serif" style="color: var(--gold); margin-bottom: 20px;">02 • AKHT</h2>
+                <div class="event-card-box">
+                    <h3>NIKAH CEREMONY</h3>
+                    <p style="font-weight: 500; color: var(--gold);">4:30 PM</p>
+                    <p style="margin: 8px 0 4px;">Suhrawardy Mosque Garden</p>
+                    <p style="font-size: 0.75rem; opacity: 0.8;">Dhaka, Bangladesh</p>
+                    <a href="#" class="btn-map" onclick="event.preventDefault();"><i class="fas fa-map-marker-alt"></i>
+                        MAP LOCATION</a>
+                </div>
+            </section>
+
+            <section class="page bg-cream" id="page4">
+                <h2 class="title-serif" style="color: var(--dark-green); margin-bottom: 20px;">03 • WEDDING</h2>
+                <div class="event-card-box">
+                    <h3>THE BRIDE'S RECEPTION</h3>
+                    <p style="font-weight: 500; color: var(--dark-green);">8:00 PM</p>
+                    <p style="margin: 8px 0 4px;">Grand Heritage Ball Room</p>
+                    <p style="font-size: 0.75rem; opacity: 0.8;">Main Airport Road, Dhaka</p>
+                    <a href="#" class="btn-map" onclick="event.preventDefault();"><i class="fas fa-map-marker-alt"></i>
+                        MAP LOCATION</a>
+                </div>
+            </section>
+
+            <section class="page bg-dark" id="page5">
+                <div class="inner-rsvp-container">
+                    <h2>RSVP</h2>
+                    <p style="font-size: 0.65rem; letter-spacing: 1px; margin-top: 4px; opacity: 0.7;">04 • WALIMA
+                        BANQUET</p>
+                    <input type="text" placeholder="Your Name" />
+                    <button class="btn-submit-rsvp" onclick="alert('Thank you for confirming!')">CONFIRM
+                        ATTENDANCE</button>
+                    <p style="font-size: 0.7rem; margin-top: 10px; font-style: italic; opacity: 0.8;">Kindly respond by
+                        next weekend.</p>
+                </div>
+
+                <div style="text-align: center; margin-top: auto; padding-bottom: 15px;">
+                    <p class="script-font" style="font-size: 1.6rem;">Thank You</p>
+                    <p style="font-size: 0.7rem; opacity: 0.6; letter-spacing: 1px; margin-top: 5px;">We look forward to
+                        sharing our joy with you.</p>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="indicators" id="indicators">
+            <button class="indicator-dot active" data-index="0" aria-label="Intro"></button>
+            <button class="indicator-dot" data-index="1" aria-label="Holud"></button>
+            <button class="indicator-dot" data-index="2" aria-label="Akht"></button>
+            <button class="indicator-dot" data-index="3" aria-label="Wedding"></button>
+            <button class="indicator-dot" data-index="4" aria-label="Walima"></button>
+        </div>
+
+        <div class="swipe-hint" id="swipeHint">← swipe to navigate →</div>
+    </div>
+
+    <!-- Background audio: loops at 60% volume, started on user interaction -->
+    <audio id="bgAudio" loop preload="auto">
+        <source src="Perfect By Ed Sheeran.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const envelopeWrapper = document.getElementById('envelopeWrapper');
+            const mainEnvelope = document.getElementById('mainEnvelope');
+            const cardWrapper = document.getElementById('cardWrapper');
+            const track = document.getElementById('cardTrack');
+            const dots = document.querySelectorAll('.indicator-dot');
+            const hint = document.getElementById('swipeHint');
+
+
+            let currentIndex = 0;
+            const totalPages = 5;
+            let isTransitioning = false;
+            let isCardReady = false; // blocks all navigation until envelope finishes
+
+            // ─── AUDIO SETUP ───
+            const bgAudio = document.getElementById('bgAudio');
+            bgAudio.volume = 0.6;
+
+            function startAudio() {
+                if (bgAudio.paused) {
+                    bgAudio.play().catch(() => {
+                        // Autoplay blocked — will retry on next interaction
+                    });
+                }
+            }
+
+            // ─── STEP 1: ENVELOPE OPENING CLICK INTERACTION ───
+            mainEnvelope.addEventListener('click', () => {
+                envelopeWrapper.classList.add('open');
+                startAudio(); // Start music on user gesture
+
+                // Wait for envelope flip/slide animation to peak, then reveal card wrapper
+                setTimeout(() => {
+                    envelopeWrapper.classList.add('fade-out');
+                    cardWrapper.classList.add('visible');
+                    // Give an extra moment for the fade to complete before enabling navigation
+                    setTimeout(() => { isCardReady = true; }, 600);
+                }, 1200);
+            });
+
+            // ─── STEP 2: MULTI-PAGE SLIDER NAVIGATION ───
+            function goTo(index) {
+                if (!isCardReady || isTransitioning) return;
+                if (index < 0) index = 0;
+                if (index >= totalPages) index = totalPages - 1;
+
+                isTransitioning = true;
+                currentIndex = index;
+
+                // Move container view window window width offset percentage
+                const offset = -index * (100 / totalPages);
+                track.style.transform = `translateX(${offset}%)`;
+
+                // Render dot structures
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+
+
+
+                if (index > 0) {
+                    hint.style.opacity = '0';
+                }
+
+                setTimeout(() => { isTransitioning = false; }, 600);
+            }
+
+
+
+            // Dot clicks
+            dots.forEach((dot) => {
+                dot.addEventListener('click', () => {
+                    const idx = parseInt(dot.getAttribute('data-index'), 10);
+                    if (idx !== currentIndex) goTo(idx);
+                });
+            });
+
+            // ─── SWIPE / DRAG SUPPORT (Touch + Mouse for PC) ───
+            let pointerStartX = 0;
+            let pointerStartY = 0;
+            let isDragging = false;
+
+            // Touch devices
+            cardWrapper.addEventListener('touchstart', (e) => {
+                pointerStartX = e.touches[0].clientX;
+                pointerStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            cardWrapper.addEventListener('touchend', (e) => {
+                const deltaX = e.changedTouches[0].clientX - pointerStartX;
+                const deltaY = e.changedTouches[0].clientY - pointerStartY;
+                if (Math.abs(deltaX) < Math.abs(deltaY) || Math.abs(deltaX) < 40) return;
+                if (deltaX < 0 && currentIndex < totalPages - 1) goTo(currentIndex + 1);
+                else if (deltaX > 0 && currentIndex > 0) goTo(currentIndex - 1);
+            }, { passive: true });
+
+            // Mouse drag (PC browsers)
+            cardWrapper.addEventListener('mousedown', (e) => {
+                if (!isCardReady) return;
+                pointerStartX = e.clientX;
+                pointerStartY = e.clientY;
+                isDragging = true;
+                cardWrapper.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                cardWrapper.style.cursor = '';
+                const deltaX = e.clientX - pointerStartX;
+                const deltaY = e.clientY - pointerStartY;
+                if (Math.abs(deltaX) < Math.abs(deltaY) || Math.abs(deltaX) < 40) return;
+                if (deltaX < 0 && currentIndex < totalPages - 1) goTo(currentIndex + 1);
+                else if (deltaX > 0 && currentIndex > 0) goTo(currentIndex - 1);
+            });
+
+            // Keyboard arrow keys
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(currentIndex + 1);
+                else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(currentIndex - 1);
+            });
+
+        })();
+    </script>
+</body>
+
+</html>
