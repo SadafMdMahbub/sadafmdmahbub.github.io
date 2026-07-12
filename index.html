@@ -7,15 +7,13 @@
     <title>Tazrian & Tashfiha's Wedding Invitation</title>
 
     <!-- ─── FONTS: EB Garamond, MonteCarlo, Cinzel, Montserrat ─── -->
-    <!-- To change fonts: replace the href URL with your chosen Google Font link -->
     <link
-            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=MonteCarlo&display=swap"
-            rel="stylesheet" />
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=MonteCarlo&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
         /* ─── Variables ─── */
-        /* Change the HEX codes below to modify the entire colour scheme */
         :root {
             --dark-green: #1c3b2b;
             --cream: #f4f1ea;
@@ -25,7 +23,7 @@
 
             /* Page 2 (Holud) Palette */
             --p2-bg: #fdf2a7;      /* Primary Light Yellow */
-            --p2-holud-orange: #d35400; /* Orangish for "Holud" */
+            --p2-holud-orange: #d97706; /* Orangish for "Holud" */
             --p2-pill-bg: #e6b422; /* Warm Gold for Location Pill */
         }
 
@@ -208,43 +206,47 @@
         }
 
         .p1-bismillah {
-            font-size: 0.65rem;
-            margin-top: 90px;
-            margin-bottom: 7px;
+            font-size: 0.65rem;   /* ADJUST: Bismillah font size */
+            margin-top: 90px;     /* ADJUST: Top margin to match design spacing */
+            margin-bottom: 7px;  /* ADJUST: Spacing below Bismillah */
             opacity: 0.95;
             z-index: 2;
             letter-spacing: 0.3px;
         }
 
+        /* INVITE MESSAGE: Middle top */
         .p1-invite-text {
-            font-size: 0.90rem;
+            font-size: 0.90rem;   /* ADJUST: Invitation text size */
             line-height: 1.3;
-            margin-bottom: 33px;
+            margin-bottom: 33px;  /* ADJUST: Gap between invite text and Groom name */
             padding: 0 5px;
             z-index: 2;
             font-weight: 400;
         }
 
+        /* NAMES: MonteCarlo Font */
         .p1-name {
-            font-family: 'MonteCarlo', cursive;
-            font-size: 2.6rem;
-            margin-bottom: 0px;
+            font-family: 'MonteCarlo', cursive; /* SECONDARY FONT */
+            font-size: 2.6rem;      /* ADJUST: Groom/Bride name font size */
+            margin-bottom: 0px;   /* ADJUST: Space below name */
             font-weight: 120;
             z-index: 2;
         }
 
+        /* PARENTAGE: EB Garamond */
         .p1-parentage {
-            font-size: 0.85rem;
-            margin-bottom: 25px;
+            font-size: 0.85rem;   /* ADJUST: Parents text font size */
+            margin-bottom: 25px;  /* ADJUST: Spacing below parentage */
             opacity: 0.70;
             z-index: 2;
         }
 
+        /* AND SEPARATOR: Line with AND text */
         .p1-and-container {
             display: flex;
             align-items: center;
-            width: 88%;
-            margin: 0 auto 10px;
+            width: 88%;           /* ADJUST: Separator line width */
+            margin: 0 auto 10px;  /* ADJUST: Distance to next section */
             z-index: 2;
         }
 
@@ -262,19 +264,21 @@
             font-weight: 300;
         }
 
+        /* FLOWER IMAGE (Bottom Left) */
         .p1-floral {
             position: absolute;
-            bottom: -40px;
-            left: -15px;
-            width: 120px;
+            bottom: -40px;  /* ADJUST: Flower distance from bottom */
+            left: -15px;   /* ADJUST: Flower distance from left */
+            width: 120px;  /* ADJUST: Flower bouquet size */
             z-index: 3;
             pointer-events: none;
         }
 
+        /* MUSIC SECTION (Bottom Right) */
         .p1-music-box {
             position: absolute;
-            bottom: 35px;
-            right: 35px;
+            bottom: 35px;  /* ADJUST: Music box distance from bottom */
+            right: 35px;   /* ADJUST: Music box distance from right edge */
             text-align: left;
             z-index: 3;
             max-width: 160px;
@@ -317,7 +321,7 @@
         @keyframes musicFill { 0% { width: 0%; } 100% { width: 100%; } }
         @keyframes musicDot { 0% { left: 0%; } 100% { left: 100%; } }
 
-        /* ─── PAGE 2: HOLUD (FIXED DESIGN) ─── */
+        /* ─── PAGE 2: HOLUD (UPDATED DESIGN) ─── */
         #page2 {
             background-color: var(--p2-bg);
             display: flex;
@@ -333,38 +337,29 @@
             background: url('Wedding/2ndCardHennaBackground.jpeg') no-repeat center center;
             background-size: cover;
             border-radius: 40px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 50px 2px 2px;
+            /* Pushes the content down into the arch */
+            padding-top: 100px; 
             font-family: 'EB Garamond', serif;
             position: relative;
-            overflow: hidden;
             text-align: center;
         }
 
         .p2-title {
             font-family: 'MonteCarlo', cursive;
-            font-size: 2.8rem;
-            margin-bottom: 0px;
-            font-weight: normal;
-            color: var(--p2-holud-orange);
-            line-height: 0.7;
+            font-size: 2.3rem;
+            color: #b38b4d;
+            line-height: 1;
+            margin-bottom: 10px;
         }
 
         .p2-subtitle {
-            font-style: italic;
             font-size: 0.7rem;
-            margin-top: 15px;
-            padding: 0 10px;
-            line-height: 0.5;
-            color: #333;
-        }
-
-        .p2-holud-of {
-            font-size: 0.9rem;
-            margin-top: 4px;
+            line-height: 1;
+            max-width: 75%;
+            margin-bottom: 1px;
             color: #333;
         }
 
@@ -372,33 +367,31 @@
             font-family: 'MonteCarlo', cursive;
             font-size: 2.2rem;
             color: #000;
-            margin: 5px 0 6px;
-            line-height: 1;
+            margin-bottom: 5px;
         }
 
         .p2-details {
-            font-size: 0.6rem;
-            line-height: 1.6;
+            font-size: 0.8rem;
+            line-height: 1.2;
+            margin-bottom: 13px; /* Space before colors */
             color: #222;
         }
 
+        /* DRESS COLORS SECTION - Brought up */
         .p2-dress-section {
-            width: 48%;
-            margin-top: auto;
-            margin-bottom: 200px;
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .p2-dress-header {
+            width: 80%;
             display: flex;
             align-items: center;
-            gap: 7px;
-            margin-bottom: 7px;
-        }
-
-        .p2-dress-header span {
-            font-size: 0.8rem;
-            color: #555;
-            white-space: nowrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .p2-dress-line {
@@ -407,16 +400,23 @@
             background: rgba(0,0,0,0.2);
         }
 
-        .p2-palette-img {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-            display: block;
-            margin: 0 auto;
+        .p2-colors-container {
+            display: flex;
+            gap: 3px;
         }
 
+        .color-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 60%;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* FOOTER POSITIONING */
         .p2-footer {
-            margin-top: 15px;
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -424,25 +424,9 @@
 
         .p2-loc-title {
             font-family: 'MonteCarlo', cursive;
-            font-size: 1rem;
+            font-size: .8rem;
             color: #000;
-            margin-bottom: 1px;
-        }
-
-        .p2-loc-pill {
-            background: var(--p2-pill-bg);
-            color: white;
-            padding: 3px 9px;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .p2-loc-pill span {
-            font-family: 'MonteCarlo', cursive;
-            font-size: 1rem;
+            margin-bottom: 5px;
         }
 
         /* ─── STYLES FOR OTHER PAGES ─── */
@@ -466,7 +450,6 @@
 <body>
 
 <!-- ─── INTRO ENVELOPE ─── -->
-<!-- Change the text inside .mini-card to update the envelope preview -->
 <div class="envelope-wrapper" id="envelopeWrapper">
     <div class="envelope" id="mainEnvelope">
         <div class="envelope-flap"></div>
@@ -484,8 +467,6 @@
     <div class="card-track" id="cardTrack">
 
         <!-- PAGE 1: INTRO -->
-        <!-- Change the text inside <p> and <h1> tags to update names, parents, etc. -->
-        <!-- Replace image src attributes with your own images (keep in Wedding/ folder) -->
         <section class="page" id="page1">
             <div class="p1-frame"></div>
             <img src="Wedding/Pigion for firstpage.png" class="p1-dove" alt="pigeon" />
@@ -510,42 +491,48 @@
             </div>
         </section>
 
-        <!-- PAGE 2: HOLUD (Corrected Alignment & Palette) -->
-        <!-- Change text, event details, and image paths as needed -->
+        <!-- PAGE 2: HOLUD -->
         <section class="page" id="page2">
             <div class="p2-inner-card">
                 <h1 class="p2-title">Holud</h1>
-                <p class="p2-subtitle">Yellow hues and joyous tunes, join us for the Gaye</p>
-                <p class="p2-holud-of">Holud of</p>
+                <p class="p2-subtitle">Yellow hues and joyous tunes, join us for the Gaye Holud of</p>
+                
                 <h2 class="p2-groom-name">Mohammad Tazrian</h2>
 
                 <div class="p2-details">
-                    <p>Event Date: 4th September, 2026</p>
-                    <p>Time: 8.00 P.M</p>
-                    <p>Location: Baganbari,</p>
+                    Event Date: 4th September, 2026<br>
+                    Time: 8.00 P.M<br>
+                    Location: Baganbari, asdas
                 </div>
 
+                <!-- Dress Colors moved right under details -->
                 <div class="p2-dress-section">
                     <div class="p2-dress-header">
                         <div class="p2-dress-line"></div>
                         <span>Dress Colors</span>
                         <div class="p2-dress-line"></div>
                     </div>
-                    <img src="Wedding/2ndpageColorPalatte.png" alt="Color Palette" class="p2-palette-img" />
+                    <div class="p2-colors-container">
+                        <div class="color-circle" style="background: #d6519c;"></div>
+                        <div class="color-circle" style="background: #ffd700;"></div>
+                        <div class="color-circle" style="background: #ff00ff;"></div>
+                        <div class="color-circle" style="background: #ffe87c;"></div>
+                        <div class="color-circle" style="background: #ff7f50;"></div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="p2-footer">
-                <span class="p2-loc-title">Location</span>
-                <div class="p2-loc-pill">
-                    <i class="fas fa-map-marker-alt" style="font-size: 1rem;"></i>
-                    <span>Baganbari on Map</span>
+                <!-- Absolute positioned footer -->
+                <div class="p2-footer">
+                    <div class="p2-loc-title">Location</div>
+                    <a href="#" class="p2-loc-pill" style="background: #e5b13a; text-decoration: none; padding: 10px 30px; border-radius: 50px; display: flex; align-items: center; gap: 8px; color: #4a3728;">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span style="font-family: 'MonteCarlo', cursive; font-size: 1.5rem;">Baganbari on GMap</span>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- PAGE 3: AKHT -->
-        <!-- Update heading, event title, time, and location -->
         <section class="page" id="page3" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
             <h2 class="title-serif" style="color: var(--gold); margin-bottom: 25px;">02 • AKHT</h2>
             <div class="event-card-box" style="border-color: var(--gold);">
@@ -556,7 +543,6 @@
         </section>
 
         <!-- PAGE 4: WEDDING -->
-        <!-- Update heading, event title, time, and location -->
         <section class="page bg-cream" id="page4" style="padding: 45px 30px;">
             <h2 class="title-serif" style="color: var(--dark-green); margin-bottom: 25px;">03 • WEDDING</h2>
             <div class="event-card-box">
@@ -567,7 +553,6 @@
         </section>
 
         <!-- PAGE 5: RSVP -->
-        <!-- Change placeholder, button text, and alert message -->
         <section class="page" id="page5" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
             <div style="background: var(--cream); color: var(--text-dark); border-radius: 25px; padding: 30px 20px; text-align: center;">
                 <h2 class="title-serif" style="color: var(--dark-green); font-size: 1.6rem; margin-bottom: 10px;">RSVP</h2>
@@ -587,7 +572,6 @@
 </div>
 
 <!-- BACKGROUND AUDIO -->
-<!-- Replace the src with your own audio file -->
 <audio id="bgAudio" loop preload="auto">
     <source src="Wedding/Perfect By Ed Sheeran.mp3" type="audio/mpeg" />
 </audio>
