@@ -1,10 +1,4 @@
 <div align="center">
-  <img src="https://i.pinimg.com/1200x/f3/8a/da/f38adaa99cd5c084be6d08c39a254fb3.jpg" alt="Wedding Invitation" width="600" />
-</div>
-
-<br />
-
-<div align="center">
 
 # 💍 Wedding Invitation Card
 

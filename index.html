@@ -8,15 +8,11 @@
     <!-- ===== OPEN GRAPH / SOCIAL PREVIEW META TAGS ===== -->
     <meta property="og:title" content="Wedding Invitation" />
     <meta property="og:description" content="We cordially invite you to celebrate the wedding journey of our family. Join us for Holud, Akt, Wedding & Walima ceremonies!" />
-    <meta property="og:image" content="https://i.pinimg.com/1200x/f3/8a/da/f38adaa99cd5c084be6d08c39a254fb3.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="1200" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://sadafmdmahbub.github.io/" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Wedding Invitation" />
     <meta name="twitter:description" content="We cordially invite you to celebrate the wedding journey of our family." />
-    <meta name="twitter:image" content="https://i.pinimg.com/1200x/f3/8a/da/f38adaa99cd5c084be6d08c39a254fb3.jpg" />
 
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&display=swap" rel="stylesheet" />
     <style>
@@ -386,8 +382,8 @@
     let startX = 0;
     let musicPlaying = false;
 
-    // --- SET VOLUME TO 45% (0.45) ---
-    bgMusic.volume = 0.28;   // 28% of device volume
+    // --- SET VOLUME TO 28% ---
+    bgMusic.volume = 0.28;
 
     // ============================================================
     //  TIMER
@@ -461,7 +457,6 @@
                 musicToggle.classList.add('visible');
             })
             .catch(err => {
-                // If autoplay is blocked, the user can click the toggle.
                 console.warn('Music autoplay blocked:', err);
                 musicToggle.textContent = '🔇';
                 musicToggle.classList.add('visible');
@@ -497,13 +492,11 @@
         slider.style.display = 'block';
         updateCountdown();
 
-        // Show first slide after envelope opens
         setTimeout(() => {
             document.getElementById('slide-0').classList.add('active');
             slider.classList.add('show-swipe');
         }, 800);
 
-        // Attempt to start music (user gesture → allowed)
         startMusic();
     }
 
@@ -551,7 +544,6 @@
         }
     });
 
-    // Keyboard arrows
     document.addEventListener('keydown', e => {
         const envelope = document.getElementById('envelope');
         if (!envelope.classList.contains('open')) return;
@@ -571,7 +563,6 @@
         if (document.visibilityState === 'hidden') {
             if (musicPlaying) {
                 bgMusic.pause();
-                // We keep musicPlaying = true so we know it was playing
             }
         } else {
             if (musicPlaying) {
@@ -591,10 +582,9 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Log a helpful message in case the audio fails
     console.log('🔊 Audio file should be at: Wedding/Jashn-E-Bahaaraa-Flute.mp3');
     console.log('📁 Make sure the file exists in the "Wedding" folder next to this HTML file.');
-    console.log('🔊 Volume set to 45%');
+    console.log('🔊 Volume set to 28%');
 </script>
 </body>
 </html>
