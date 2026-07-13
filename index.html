@@ -1,331 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!-- Viewport: Makes sure the invitation looks perfect on all modern mobile phones and auto-resizes to fit screen -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8" />
+    <!-- Responsive on all phones -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Wedding Invitation</title>
+    <!-- Fancy fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&display=swap" rel="stylesheet" />
     <style>
-        /* 
-           DESIGN SETTINGS: 
-           Change these variables to easily adjust colors and timings later.
-        */
+        /* ----- CUSTOMISE THESE COLOURS & TIMINGS ----- */
         :root {
-            --card-bg-color: #FFFFF0;   /* Ivory background color for the cards */
-            --text-color-main: #4e342e; /* Primary text color (Dark Brown) */
-            --text-color-sub: #5d4037;  /* Secondary text color */
-            --fade-duration: 2s;        /* Time for text to gradually appear (Requested 2s) */
-            --envelope-speed: 1.2s;     /* Speed of the envelope opening animation */
+          --card-bg: #FFFFF0;          /* ivory background */
+          --text-main: #4e342e;        /* dark brown */
+          --text-sub: #5d4037;         /* secondary brown */
+          --fade-dur: 2s;              /* text fade duration */
+          --env-speed: 1.2s;           /* envelope open speed */
+          --hint-color: #b22222;       /* "Tap to Open" colour */
         }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* Prevents scrolling for a clean mobile feel */
-            font-family: 'Georgia', serif;
-            background-color: #FFFFF0; /* Aesthetic White/Ivory background */
+        /* reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+          width: 100%; height: 100%;
+          overflow: hidden;            /* no scrolling on mobile */
+          font-family: 'Georgia', serif;
+          background: var(--card-bg);
         }
 
-        /* 
-           MAIN CONTAINER: 
-           Everything is centered here using Flexbox.
-        */
+        /* centre everything */
         #app {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* Global background changed to solid Aesthetic White/Ivory */
-            background-color: #FFFFF0;
+          position: relative;
+          width: 100%; height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: var(--card-bg);
         }
 
-        /* 
-           ENVELOPE SYSTEM:
-           Centered ("glued") in the middle until tapped.
-        */
+        /* ----- ENVELOPE (shifted right a little) ----- */
         .envelope-container {
-            position: absolute;
-            width: 90vw;
-            height: 60vh;
-            max-width: 450px;
-            z-index: 100; /* Stays on top of cards initially */
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.8s ease 1s; /* Fades out after the slide animation */
+          position: absolute;
+          width: 90vw; max-width: 450px;
+          height: 60vh;
+          z-index: 100;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: opacity 1s ease 1.5s;
+          margin-left: 20px;            /* shift right */
+        }
+        .tap-hint {
+          position: absolute;
+          top: -60px;
+          font-family: 'Dancing Script', cursive;
+          font-size: 2.2rem;
+          color: var(--hint-color);
+          animation: bounce 2s infinite;
+          pointer-events: none;
+          white-space: nowrap;
+        }
+        @keyframes bounce {
+          0%,20%,50%,80%,100% { transform: translateY(0); }
+          40% { transform: translateY(-15px); }
+          60% { transform: translateY(-8px); }
         }
 
-        /* The starting appearance of the envelope - base background removed as requested */
         .envelope-base {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
+          position: absolute;
+          width: 100%; height: 100%;
+          z-index: 1;
         }
-
-        /* The sliding parts of the envelope (Left and Right) */
         .envelope-half {
-            position: absolute;
-            top: 0;
-            width: 61%;
-            height: 100%;
-            background-size: contain;
-            background-repeat: no-repeat;
-            transition: transform var(--envelope-speed) cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 2;
+          position: absolute;
+          top: 0;
+          width: 61%; height: 100%;
+          background-size: contain;
+          background-repeat: no-repeat;
+          transition: transform var(--env-speed) cubic-bezier(0.4,0,0.2,1);
+          z-index: 2;
         }
-
         .left-half {
-            left: 0;
-            background-image: url('Wedding/envelopLeft.png');
-            background-position: right;
+          left: 0;
+          background-image: url('Wedding/envelopLeft.png');
+          background-position: right;
         }
-
         .right-half {
-            right: 0;
-            background-image: url('Wedding/EnvelopRight.png');
-            background-position: left;
+          right: 0;
+          background-image: url('Wedding/EnvelopRight.png');
+          background-position: left;
         }
 
-        /* Triggered when 'open' class is added via JavaScript */
+        /* open states */
         .envelope-container.open .left-half { transform: translateX(-150%); }
         .envelope-container.open .right-half { transform: translateX(150%); }
         .envelope-container.open { pointer-events: none; opacity: 0; }
+        .envelope-container.open .tap-hint { display: none; }
 
-        /* 
-           CARD SLIDER: 
-           This container holds the invitation cards revealed after the envelope opens.
-        */
+        /* ----- COUNTDOWN TIMER (above cards) ----- */
+        #timer-container {
+          position: absolute;
+          top: 25px;
+          width: 100%;
+          text-align: center;
+          opacity: 0;
+          z-index: 50;
+          transition: opacity 0.5s ease;
+          pointer-events: none;
+        }
+        .timer-label {
+          font-size: 0.9rem;
+          color: #8d6e63;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          margin-bottom: 5px;
+        }
+        #timer-display {
+          font-family: 'Great Vibes', cursive;
+          font-size: 1.8rem;
+          color: var(--text-main);
+        }
+
+        /* ----- SLIDER (cards) ----- */
         .slider {
-            position: relative;
-            width: 85vw;
-            height: 80vh;
-            max-width: 400px;
-            display: none; /* Initially hidden */
+          position: relative;
+          width: 85vw; max-width: 400px;
+          height: 75vh;
+          display: none;
+          margin-top: 50px;            /* room for timer */
         }
-
         .card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: var(--card-bg-color); /* Applied Ivory color */
-            background-size: 100% 100%; 
-            background-position: center;
-            border-radius: 20px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 30px;
-            box-sizing: border-box;
-            opacity: 0;
-            transform: scale(0.9) translateY(30px);
-            transition: all 0.8s ease-out;
-            pointer-events: none;
+          position: absolute;
+          width: 100%; height: 100%;
+          background-color: var(--card-bg);
+          background-size: 100% 100%;
+          background-position: center;
+          border-radius: 20px;
+          box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 30px;
+          opacity: 0;
+          transform: scale(0.9) translateY(30px);
+          transition: all 0.8s ease-out;
+          pointer-events: none;
         }
-
-        /* Active card style - makes it visible and interactive */
         .card.active {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-            z-index: 10;
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          pointer-events: auto;
+          z-index: 10;
         }
 
-        /* BACKGROUND ASSIGNMENTS:
-           Assigning specific background images to the requested cards.
-        */
-        .card-intro { background-image: url('Wedding/(BG)IntroductionCard.png'); }
-        .card-henna { background-image: url('Wedding/(BG)henna.png'); }
-        .card-event { background-image: url('Wedding/(BG)AktWeddingWalimaCard.png'); }
+        /* background images for each card – CHANGE PATHS */
+        .card-intro   { background-image: url('Wedding/(BG)IntroductionCard.png'); }
+        .card-henna   { background-image: url('Wedding/(BG)henna.png'); }
+        .card-akt     { background-image: url('Wedding/(BG)TheAkt.png'); }
+        .card-wedding { background-image: url('Wedding/(BG)TheWedding.png'); }
+        .card-walima  { background-image: url('Wedding/(BG)Walima.png'); }
 
-        /* TEXT GRADUAL FADE ANIMATION:
-           Text appears aesthetically within 2 seconds.
-        */
+        /* fade-in text inside cards */
         .fade-text {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity var(--fade-duration) ease, transform var(--fade-duration) ease;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity var(--fade-dur) ease, transform var(--fade-dur) ease;
         }
-
-        /* When the card becomes active, its children with .fade-text will animate */
         .active .fade-text {
-            opacity: 1;
-            transform: translateY(0);
+          opacity: 1;
+          transform: translateY(0);
         }
-
-        /* Delays so lines of text appear one after another */
         .delay-1 { transition-delay: 0.5s; }
         .delay-2 { transition-delay: 1.5s; }
         .delay-3 { transition-delay: 2.5s; }
 
-        /* Typography Styling */
-        h1 { font-size: 2.1rem; color: var(--text-color-main); margin-bottom: 10px; font-weight: bold; }
-        p { font-size: 1.2rem; color: var(--text-color-sub); line-height: 1.5; }
-
+        /* headings & paragraphs */
+        h1 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--text-main); margin-bottom: 10px; }
+        p  { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <!-- Music Player: Volume is locked to 35% in the script -->
+    <!-- Background music – change src -->
     <audio id="bgMusic" src="Wedding/Perfect By Ed Sheeran.mp3" loop></audio>
 
-    <!-- ENVELOPE: Center-glued, opens on tap -->
+    <!-- ENVELOPE -->
     <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+        <div class="tap-hint">Tap to Open</div>
         <div class="envelope-half left-half"></div>
         <div class="envelope-half right-half"></div>
         <div class="envelope-base"></div>
     </div>
 
-    <!-- INVITATION SLIDER: Reveals after envelope opens -->
+    <!-- TIMER -->
+    <div id="timer-container">
+        <div class="timer-label" id="timer-target-name">Countdown</div>
+        <div id="timer-display">Calculating...</div>
+    </div>
+
+    <!-- SLIDER CARDS -->
     <div class="slider" id="slider">
-        
-        <!-- 1. INTRODUCTION CARD -->
+        <!-- slide 0: Intro -->
         <div class="card card-intro" id="slide-0">
             <h1 class="fade-text delay-1">Invitation</h1>
             <p class="fade-text delay-2">We cordially invite you to celebrate the wedding journey of our family.</p>
-            <p class="fade-text delay-3" style="font-style: italic; margin-top:20px;">Swipe to see more &rarr;</p>
+            <p class="fade-text delay-3" style="font-style:italic; margin-top:20px;">Swipe to explore &rarr;</p>
         </div>
-
-        <!-- 2. GAYE HOLUD (using Henna background) -->
+        <!-- slide 1: Holud -->
         <div class="card card-henna" id="slide-1">
             <h1 class="fade-text delay-1">Gaye Holud</h1>
             <p class="fade-text delay-2">A celebration of color, music, and tradition.</p>
-            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+            <p class="fade-text delay-3">September 4th<br />Venue: TBA</p>
         </div>
-
-        <!-- 3. AKT (Separate event) -->
-        <div class="card card-event" id="slide-2">
+        <!-- slide 2: Akt -->
+        <div class="card card-akt" id="slide-2">
             <h1 class="fade-text delay-1">The Akt</h1>
             <p class="fade-text delay-2">The sacred union and official ceremony.</p>
-            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+            <p class="fade-text delay-3">September 5th<br />Venue: TBA</p>
         </div>
-
-        <!-- 4. WEDDING (Separate event) -->
-        <div class="card card-event" id="slide-3">
+        <!-- slide 3: Wedding -->
+        <div class="card card-wedding" id="slide-3">
             <h1 class="fade-text delay-1">The Wedding</h1>
-            <p class="fade-text delay-2">Witness the grand celebration of a new beginning.</p>
-            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+            <p class="fade-text delay-2">Witness the start of a beautiful journey.</p>
+            <p class="fade-text delay-3">September 12th<br />Venue: TBA</p>
         </div>
-
-        <!-- 5. WALIMA -->
-        <div class="card card-event" id="slide-4">
+        <!-- slide 4: Walima -->
+        <div class="card card-walima" id="slide-4">
             <h1 class="fade-text delay-1">Walima</h1>
             <p class="fade-text delay-2">A feast to bless the couple and celebrate their new life.</p>
-            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+            <p class="fade-text delay-3">September 14th<br />Venue: TBA</p>
         </div>
-
     </div>
 </div>
 
 <script>
-    /* 
-       CORE SCRIPT: 
-       Handles the flow, music, and sliding logic.
-    */
+    // ---------- CONFIGURATION ----------
+    const totalSlides = 5;
+    // Event dates (month is 0‑based: 7=Aug, 8=Sep, etc.)
+    const weddingEvents = [
+      { name: "Holud",   month: 8, day: 4 },   // Sept 4
+      { name: "Akt",     month: 8, day: 5 },   // Sept 5
+      { name: "Wedding", month: 8, day: 12 },  // Sept 12
+      { name: "Walima",  month: 8, day: 14 }   // Sept 14
+    ];
+    const celebrationDuration = 3 * 60 * 60 * 1000; // 3 hours
 
-    let currentSlide = 0;
-    const totalSlides = 5; // Intro, Holud, Akt, Wedding, Walima
-    let startX = 0;
-    
+    // ---------- DOM refs ----------
     const slider = document.getElementById('slider');
     const bgMusic = document.getElementById('bgMusic');
-
-    /* VOLUME SETTING: Always 35% as requested (0.35) */
+    const timerContainer = document.getElementById('timer-container');
+    let currentSlide = 0;
+    let startX = 0;
     bgMusic.volume = 0.35;
 
-    /**
-     * openEnvelope():
-     * Triggers when the user taps the envelope. Starts music and opens the envelope.
-     */
-    function openEnvelope() {
-        // Play music - Browser requires a tap/click to allow audio
-        bgMusic.play().catch(e => console.log("Audio play blocked", e));
+    // ---------- Timer update ----------
+    function updateCountdown() {
+      const now = new Date();
+      const currentYear = now.getFullYear();
 
-        // Start the envelope opening animation
-        document.getElementById('envelope').classList.add('open');
-        
-        // Make the cards visible in the background
-        slider.style.display = 'block';
+      const events = weddingEvents.map(e => {
+        const start = new Date(currentYear, e.month, e.day, 20, 0, 0); // 8 PM
+        return {
+          name: e.name,
+          startTime: start,
+          endTime: new Date(start.getTime() + celebrationDuration)
+        };
+      });
 
-        // Trigger the first card (Intro) appearance after a short delay
-        setTimeout(() => {
-            document.getElementById('slide-0').classList.add('active');
-        }, 800);
-    }
+      if (currentSlide === 0) {
+        timerContainer.style.opacity = '0';
+        return;
+      }
 
-    /**
-     * SWIPE DETECTION:
-     * Handles touch for mobile and mouse dragging for desktop.
-     */
-    document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-    document.addEventListener('touchend', e => handleSwipe(e.changedTouches[0].clientX));
-    
-    document.addEventListener('mousedown', e => startX = e.clientX);
-    document.addEventListener('mouseup', e => handleSwipe(e.clientX));
+      const unfinished = events.filter(e => now < e.endTime);
+      const nameLabel = document.getElementById('timer-target-name');
+      const timeLabel = document.getElementById('timer-display');
 
-    function handleSwipe(endX) {
-        // Only allow swiping if the invitation has been opened
-        if (!document.getElementById('envelope').classList.contains('open')) return;
+      if (unfinished.length === 0) {
+        timerContainer.style.opacity = '1';
+        nameLabel.innerText = "";
+        timeLabel.innerText = "Thanks for celebrating with us";
+        return;
+      }
 
-        const distance = startX - endX;
-        const threshold = 50; // Minimum distance (pixels) to count as a swipe
+      timerContainer.style.opacity = '1';
 
-        if (Math.abs(distance) > threshold) {
-            if (distance > 0 && currentSlide < totalSlides - 1) {
-                // Swipe Left -> Show Next Slide
-                goToSlide(currentSlide + 1);
-            } else if (distance < 0 && currentSlide > 0) {
-                // Swipe Right -> Show Previous Slide
-                goToSlide(currentSlide - 1);
-            }
+      const eventIndex = currentSlide - 1;
+      let targetEvent = events[eventIndex] && now < events[eventIndex].endTime
+        ? events[eventIndex]
+        : unfinished[0];
+
+      nameLabel.innerText = "Countdown to " + targetEvent.name;
+
+      const diffToStart = targetEvent.startTime - now;
+
+      if (diffToStart > 0) {
+        const days = Math.floor(diffToStart / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diffToStart % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diffToStart % (1000 * 60 * 60)) / (1000 * 60));
+
+        if (days > 0) {
+          timeLabel.innerText = days + (days === 1 ? " Day " : " Days ") + "to go";
+        } else if (hours >= 1) {
+          timeLabel.innerText = hours + (hours === 1 ? " Hour " : " Hours ") + "to go";
+        } else {
+          timeLabel.innerText = minutes + (minutes === 1 ? " Minute " : " Minutes ") + "to go";
         }
+      } else {
+        timeLabel.innerText = "Happening Now!";
+      }
     }
 
-    /**
-     * goToSlide(index):
-     * Switches which card is currently "active".
-     */
+    // ---------- Open envelope ----------
+    function openEnvelope() {
+      bgMusic.play().catch(e => {});
+      document.getElementById('envelope').classList.add('open');
+      slider.style.display = 'block';
+      updateCountdown();
+
+      setTimeout(() => {
+        document.getElementById('slide-0').classList.add('active');
+      }, 800);
+    }
+
+    // ---------- Slide navigation ----------
     function goToSlide(index) {
-        // Hide previous card
-        document.getElementById(`slide-${currentSlide}`).classList.remove('active');
-        
-        // Show new active card
-        currentSlide = index;
-        document.getElementById(`slide-${currentSlide}`).classList.add('active');
+      if (index < 0 || index >= totalSlides) return;
+      document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+      currentSlide = index;
+      document.getElementById(`slide-${currentSlide}`).classList.add('active');
+      updateCountdown();
     }
 
-    /* 
-       --- DESIGNER TIPS FOR CHANGES ---
+    // Touch / mouse drag (swipe)
+    document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    document.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+        else if (diff < 0 && currentSlide > 0) goToSlide(currentSlide - 1);
+      }
+    });
 
-       1. CHANGE TEXT CONTENT: 
-          Find the <h1> and <p> tags in the HTML body above. 
-          Edit the text inside those tags for each event.
+    document.addEventListener('mousedown', e => startX = e.clientX);
+    document.addEventListener('mouseup', e => {
+      const diff = startX - e.clientX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+        else if (diff < 0 && currentSlide > 0) goToSlide(currentSlide - 1);
+      }
+    });
 
-       2. CHANGE CARD COLOR: 
-          Look at the top under :root { --card-bg-color: #FFFFF0; }.
-          Change #FFFFF0 to any other hex code you like.
+    // Keyboard arrows (PC)
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('envelope').classList.contains('open')) return;
+      if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+      else if (e.key === 'ArrowLeft' && currentSlide > 0) goToSlide(currentSlide - 1);
+    });
 
-       3. CHANGE HOW FAST TEXT APPEARS:
-          Change --fade-duration: 2s; in the :root section. 
+    // ---------- Auto-run timer and music handling ----------
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-       4. CHANGE MUSIC VOLUME:
-          Look at the script line: 'bgMusic.volume = 0.35;'. 
-          0.1 is quiet, 1.0 is full volume.
-
-       5. CHANGE CARD BACKGROUND IMAGES:
-          Look at the CSS sections like .card-intro, .card-henna, etc.
-          Update the URL paths in 'url(...)' to point to new image files.
-    */
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        bgMusic.pause();
+      } else {
+        if (document.getElementById('envelope').classList.contains('open')) {
+          bgMusic.play().catch(e => {});
+        }
+      }
+    });
+    window.addEventListener('pagehide', () => bgMusic.pause());
 </script>
-
 </body>
 </html>
