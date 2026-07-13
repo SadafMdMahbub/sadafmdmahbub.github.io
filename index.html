@@ -1,636 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Tazrian & Tashfiha's Wedding Invitation</title>
-
-    <!-- ─── FONTS: EB Garamond, MonteCarlo, Cinzel, Montserrat ─── -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=MonteCarlo&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
+    <meta charset="UTF-8">
+    <!-- Viewport: Makes sure the invitation looks perfect on all modern mobile phones and auto-resizes to fit screen -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wedding Invitation</title>
     <style>
-        /* ─── Variables ─── */
+        /* 
+           DESIGN SETTINGS: 
+           Change these variables to easily adjust colors and timings later.
+        */
         :root {
-            --dark-green: #1c3b2b;
-            --cream: #f4f1ea;
-            --gold: #c3a475;
-            --text-light: #ffffff;
-            --text-dark: #2c3531;
-
-            /* Page 2 (Holud) Palette */
-            --p2-bg: #fdf2a7;      /* Primary Light Yellow */
-            --p2-holud-orange: #d97706; /* Orangish for "Holud" */
-            --p2-pill-bg: #e6b422; /* Warm Gold for Location Pill */
+            --card-bg-color: #FFFFF0;   /* Ivory background color for the cards */
+            --text-color-main: #4e342e; /* Primary text color (Dark Brown) */
+            --text-color-sub: #5d4037;  /* Secondary text color */
+            --fade-duration: 2s;        /* Time for text to gradually appear (Requested 2s) */
+            --envelope-speed: 1.2s;     /* Speed of the envelope opening animation */
         }
 
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #faf7f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 10px;
-            overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* ─── ENVELOPE INTRO SCENE ─── */
-        .envelope-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background-color: #faf7f2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            z-index: 100;
-            transition: opacity 0.8s ease, visibility 0.8s;
-            perspective: 1000px;
+            overflow: hidden; /* Prevents scrolling for a clean mobile feel */
+            font-family: 'Georgia', serif;
+            background-color: #FFFFF0; /* Aesthetic White/Ivory background */
         }
 
-        .envelope {
+        /* 
+           MAIN CONTAINER: 
+           Everything is centered here using Flexbox.
+        */
+        #app {
             position: relative;
-            width: 320px;
-            height: 220px;
-            background: #ffffff;
-            border-radius: 0 0 16px 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Global background changed to solid Aesthetic White/Ivory */
+            background-color: #FFFFF0;
+        }
+
+        /* 
+           ENVELOPE SYSTEM:
+           Centered ("glued") in the middle until tapped.
+        */
+        .envelope-container {
+            position: absolute;
+            width: 90vw;
+            height: 60vh;
+            max-width: 450px;
+            z-index: 100; /* Stays on top of cards initially */
             cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease 1s; /* Fades out after the slide animation */
         }
 
-        .envelope-flap {
+        /* The starting appearance of the envelope - base background removed as requested */
+        .envelope-base {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background: #ffffff;
-            clip-path: polygon(0 0, 50% 55%, 100% 0);
-            transform-origin: top center;
-            z-index: 3;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 16px 16px 0 0;
-        }
-
-        .envelope-pocket {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fdfdfd;
-            clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 55%);
-            z-index: 2;
-            border-radius: 0 0 16px 16px;
-        }
-
-        .mini-card {
-            position: absolute;
-            top: 10px;
-            left: 5%;
-            width: 90%;
-            height: 90%;
-            background: var(--dark-green);
-            border-radius: 12px;
             z-index: 1;
-            transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* The sliding parts of the envelope (Left and Right) */
+        .envelope-half {
+            position: absolute;
+            top: 0;
+            width: 61%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: transform var(--envelope-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        .left-half {
+            left: 0;
+            background-image: url('Wedding/envelopLeft.png');
+            background-position: right;
+        }
+
+        .right-half {
+            right: 0;
+            background-image: url('Wedding/EnvelopRight.png');
+            background-position: left;
+        }
+
+        /* Triggered when 'open' class is added via JavaScript */
+        .envelope-container.open .left-half { transform: translateX(-150%); }
+        .envelope-container.open .right-half { transform: translateX(150%); }
+        .envelope-container.open { pointer-events: none; opacity: 0; }
+
+        /* 
+           CARD SLIDER: 
+           This container holds the invitation cards revealed after the envelope opens.
+        */
+        .slider {
+            position: relative;
+            width: 85vw;
+            height: 80vh;
+            max-width: 400px;
+            display: none; /* Initially hidden */
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--card-bg-color); /* Applied Ivory color */
+            background-size: 100% 100%; 
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
-            padding: 15px;
             text-align: center;
-        }
-
-        .mini-card h3 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); }
-        .mini-card p { font-size: 0.6rem; opacity: 0.7; margin-top: 5px; }
-
-        .envelope-wrapper.open .envelope-flap { transform: rotateX(180deg); z-index: 0; }
-        .envelope-wrapper.open .mini-card { transform: translateY(-130px) scale(1.05); z-index: 4; }
-        .envelope-wrapper.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
-
-        .tap-hint {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: tapPulse 1.8s ease-in-out infinite;
-            z-index: 101;
-        }
-
-        .tap-hint span { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 3px; color: var(--text-dark); opacity: 0.55; }
-
-        @keyframes tapPulse { 0%, 100% { opacity: 1; transform: translateY(0); } 50% { opacity: 0.4; transform: translateY(5px); } }
-
-        /* ─── MAIN CARD CONTAINER ─── */
-        .card-wrapper {
-            width: 100%;
-            max-width: 420px;
-            aspect-ratio: 9 / 16;
-            background: var(--dark-green);
-            border-radius: 28px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            position: relative;
+            padding: 30px;
+            box-sizing: border-box;
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .card-wrapper.visible { opacity: 1; transform: translateY(0); }
-
-        .card-track {
-            display: flex;
-            height: 100%;
-            width: 500%;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .page {
-            flex: 0 0 20%;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        /* ─── PAGE 1: THE FIRST DIGITAL CARD ─── */
-        #page1 {
-            background-color: var(--dark-green);
-            color: white;
-            text-align: center;
-            font-family: 'EB Garamond', serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 20px;
-        }
-
-        .p1-frame {
-            position: absolute;
-            top: 30px;
-            left: 20px;
-            right: 20px;
-            bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .p1-dove {
-            position: absolute;
-            top: 5px;
-            right: 13px;
-            width: 120px;
-            z-index: 3;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.8s ease-out;
             pointer-events: none;
         }
 
-        .p1-bismillah {
-            font-size: 0.65rem;   /* ADJUST: Bismillah font size */
-            margin-top: 90px;     /* ADJUST: Top margin to match design spacing */
-            margin-bottom: 7px;  /* ADJUST: Spacing below Bismillah */
-            opacity: 0.95;
-            z-index: 2;
-            letter-spacing: 0.3px;
+        /* Active card style - makes it visible and interactive */
+        .card.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            z-index: 10;
         }
 
-        /* INVITE MESSAGE: Middle top */
-        .p1-invite-text {
-            font-size: 0.90rem;   /* ADJUST: Invitation text size */
-            line-height: 1.3;
-            margin-bottom: 33px;  /* ADJUST: Gap between invite text and Groom name */
-            padding: 0 5px;
-            z-index: 2;
-            font-weight: 400;
+        /* BACKGROUND ASSIGNMENTS:
+           Assigning specific background images to the requested cards.
+        */
+        .card-intro { background-image: url('Wedding/(BG)IntroductionCard.png'); }
+        .card-henna { background-image: url('Wedding/(BG)henna.png'); }
+        .card-event { background-image: url('Wedding/(BG)AktWeddingWalimaCard.png'); }
+
+        /* TEXT GRADUAL FADE ANIMATION:
+           Text appears aesthetically within 2 seconds.
+        */
+        .fade-text {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--fade-duration) ease, transform var(--fade-duration) ease;
         }
 
-        /* NAMES: MonteCarlo Font */
-        .p1-name {
-            font-family: 'MonteCarlo', cursive; /* SECONDARY FONT */
-            font-size: 2.6rem;      /* ADJUST: Groom/Bride name font size */
-            margin-bottom: 0px;   /* ADJUST: Space below name */
-            font-weight: 120;
-            z-index: 2;
+        /* When the card becomes active, its children with .fade-text will animate */
+        .active .fade-text {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* PARENTAGE: EB Garamond */
-        .p1-parentage {
-            font-size: 0.85rem;   /* ADJUST: Parents text font size */
-            margin-bottom: 25px;  /* ADJUST: Spacing below parentage */
-            opacity: 0.70;
-            z-index: 2;
-        }
+        /* Delays so lines of text appear one after another */
+        .delay-1 { transition-delay: 0.5s; }
+        .delay-2 { transition-delay: 1.5s; }
+        .delay-3 { transition-delay: 2.5s; }
 
-        /* AND SEPARATOR: Line with AND text */
-        .p1-and-container {
-            display: flex;
-            align-items: center;
-            width: 88%;           /* ADJUST: Separator line width */
-            margin: 0 auto 10px;  /* ADJUST: Distance to next section */
-            z-index: 2;
-        }
-
-        .p1-and-line {
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .p1-and-text {
-            margin: 0 20px;
-            font-size: 1.15rem;
-            letter-spacing: 5px;
-            opacity: 0.8;
-            font-weight: 300;
-        }
-
-        /* FLOWER IMAGE (Bottom Left) */
-        .p1-floral {
-            position: absolute;
-            bottom: -40px;  /* ADJUST: Flower distance from bottom */
-            left: -15px;   /* ADJUST: Flower distance from left */
-            width: 120px;  /* ADJUST: Flower bouquet size */
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        /* MUSIC SECTION (Bottom Right) */
-        .p1-music-box {
-            position: absolute;
-            bottom: 35px;  /* ADJUST: Music box distance from bottom */
-            right: 35px;   /* ADJUST: Music box distance from right edge */
-            text-align: left;
-            z-index: 3;
-            max-width: 160px;
-        }
-
-        .p1-music-box p {
-            font-size: 0.75rem;
-            line-height: 1.3;
-            opacity: 0.75;
-            margin-bottom: 12px;
-            font-family: 'EB Garamond', serif;
-        }
-
-        .p1-music-bar-container {
-            width: 120px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
-
-        .p1-music-bar-fill {
-            position: absolute;
-            height: 100%;
-            width: 40%;
-            background: white;
-            animation: musicFill 6s infinite linear;
-        }
-
-        .p1-music-dot {
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            background: white;
-            border-radius: 50%;
-            top: -2.5px;
-            left: 40%;
-            animation: musicDot 6s infinite linear;
-        }
-
-        @keyframes musicFill { 0% { width: 0%; } 100% { width: 100%; } }
-        @keyframes musicDot { 0% { left: 0%; } 100% { left: 100%; } }
-
-        /* ─── PAGE 2: HOLUD (UPDATED DESIGN) ─── */
-        #page2 {
-            background-color: var(--p2-bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .p2-inner-card {
-            width: 100%;
-            height: 95%;
-            background: url('Wedding/2ndCardHennaBackground.jpeg') no-repeat center center;
-            background-size: cover;
-            border-radius: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* Pushes the content down into the arch */
-            padding-top: 100px; 
-            font-family: 'EB Garamond', serif;
-            position: relative;
-            text-align: center;
-        }
-
-        .p2-title {
-            font-family: 'MonteCarlo', cursive;
-            font-size: 2.3rem;
-            color: #b38b4d;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .p2-subtitle {
-            font-size: 0.7rem;
-            line-height: 1;
-            max-width: 75%;
-            margin-bottom: 1px;
-            color: #333;
-        }
-
-        .p2-groom-name {
-            font-family: 'MonteCarlo', cursive;
-            font-size: 2.2rem;
-            color: #000;
-            margin-bottom: 5px;
-        }
-
-        .p2-details {
-            font-size: 0.8rem;
-            line-height: 1.2;
-            margin-bottom: 13px; /* Space before colors */
-            color: #222;
-        }
-
-        /* DRESS COLORS SECTION - Brought up */
-        .p2-dress-section {
-            width: 70%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .p2-dress-header {
-            width: 80%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .p2-dress-line {
-            flex: 1;
-            height: 1px;
-            background: rgba(0,0,0,0.2);
-        }
-
-        .p2-colors-container {
-            display: flex;
-            gap: 3px;
-        }
-
-        .color-circle {
-            width: 45px;
-            height: 45px;
-            border-radius: 60%;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        /* FOOTER POSITIONING */
-        .p2-footer {
-            position: absolute;
-            bottom: 40px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .p2-loc-title {
-            font-family: 'MonteCarlo', cursive;
-            font-size: .8rem;
-            color: #000;
-            margin-bottom: 5px;
-        }
-
-        /* ─── STYLES FOR OTHER PAGES ─── */
-        .bg-cream { background-color: var(--cream); color: var(--text-dark); }
-        .title-serif { font-family: 'Cinzel', serif; letter-spacing: 2px; text-align: center; }
-        .event-card-box {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(195, 164, 117, 0.2);
-            border-radius: 18px; padding: 25px; text-align: center; margin: 10px 0;
-        }
-        .indicators {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 8px; z-index: 10; background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px); padding: 6px 16px; border-radius: 40px;
-        }
-        .indicator-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); border: none; cursor: pointer; transition: 0.4s; }
-        .indicator-dot.active { background: var(--gold); width: 20px; border-radius: 6px; }
+        /* Typography Styling */
+        h1 { font-size: 2.1rem; color: var(--text-color-main); margin-bottom: 10px; font-weight: bold; }
+        p { font-size: 1.2rem; color: var(--text-color-sub); line-height: 1.5; }
 
     </style>
 </head>
-
 <body>
 
-<!-- ─── INTRO ENVELOPE ─── -->
-<div class="envelope-wrapper" id="envelopeWrapper">
-    <div class="envelope" id="mainEnvelope">
-        <div class="envelope-flap"></div>
-        <div class="mini-card">
-            <h3>Tazrian &amp; Tashfiha</h3>
-            <p>INVITES YOU TO OUR WEDDING</p>
+<div id="app">
+    <!-- Music Player: Volume is locked to 35% in the script -->
+    <audio id="bgMusic" src="Wedding/Perfect By Ed Sheeran.mp3" loop></audio>
+
+    <!-- ENVELOPE: Center-glued, opens on tap -->
+    <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+        <div class="envelope-half left-half"></div>
+        <div class="envelope-half right-half"></div>
+        <div class="envelope-base"></div>
+    </div>
+
+    <!-- INVITATION SLIDER: Reveals after envelope opens -->
+    <div class="slider" id="slider">
+        
+        <!-- 1. INTRODUCTION CARD -->
+        <div class="card card-intro" id="slide-0">
+            <h1 class="fade-text delay-1">Invitation</h1>
+            <p class="fade-text delay-2">We cordially invite you to celebrate the wedding journey of our family.</p>
+            <p class="fade-text delay-3" style="font-style: italic; margin-top:20px;">Swipe to see more &rarr;</p>
         </div>
-        <div class="envelope-pocket"></div>
-    </div>
-    <div class="tap-hint"><span>Tap to Open</span></div>
-</div>
 
-<!-- ─── MAIN CARD CONTAINER ─── -->
-<div class="card-wrapper" id="cardWrapper">
-    <div class="card-track" id="cardTrack">
+        <!-- 2. GAYE HOLUD (using Henna background) -->
+        <div class="card card-henna" id="slide-1">
+            <h1 class="fade-text delay-1">Gaye Holud</h1>
+            <p class="fade-text delay-2">A celebration of color, music, and tradition.</p>
+            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+        </div>
 
-        <!-- PAGE 1: INTRO -->
-        <section class="page" id="page1">
-            <div class="p1-frame"></div>
-            <img src="Wedding/Pigion for firstpage.png" class="p1-dove" alt="pigeon" />
-            <p class="p1-bismillah">In the name of Allah, the Most Gracious, the Most Merciful,</p>
-            <p class="p1-invite-text">We invite you to celebrate the love, laughter,<br>and happily ever after of</p>
-            <h1 class="p1-name">Mohammad Tazrian</h1>
-            <p class="p1-parentage">Son of Mohammed Musa & Nasrin Sultana</p>
-            <div class="p1-and-container">
-                <div class="p1-and-line"></div>
-                <span class="p1-and-text">AND</span>
-                <div class="p1-and-line"></div>
-            </div>
-            <h1 class="p1-name">Tashfiha Faruk</h1>
-            <p class="p1-parentage">Daughter of Mohammad Faruk & Rasheda Begum</p>
-            <img src="Wedding/FlowerForFirstPage.png" class="p1-floral" alt="flowers" />
-            <div class="p1-music-box">
-                <p>Thinking Out Loud<br>by Ed Sheeran</p>
-                <div class="p1-music-bar-container">
-                    <div class="p1-music-bar-fill"></div>
-                    <div class="p1-music-dot"></div>
-                </div>
-            </div>
-        </section>
+        <!-- 3. AKT (Separate event) -->
+        <div class="card card-event" id="slide-2">
+            <h1 class="fade-text delay-1">The Akt</h1>
+            <p class="fade-text delay-2">The sacred union and official ceremony.</p>
+            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+        </div>
 
-        <!-- PAGE 2: HOLUD -->
-        <section class="page" id="page2">
-            <div class="p2-inner-card">
-                <h1 class="p2-title">Holud</h1>
-                <p class="p2-subtitle">Yellow hues and joyous tunes, join us for the Gaye Holud of</p>
-                
-                <h2 class="p2-groom-name">Mohammad Tazrian</h2>
+        <!-- 4. WEDDING (Separate event) -->
+        <div class="card card-event" id="slide-3">
+            <h1 class="fade-text delay-1">The Wedding</h1>
+            <p class="fade-text delay-2">Witness the grand celebration of a new beginning.</p>
+            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+        </div>
 
-                <div class="p2-details">
-                    Event Date: 4th September, 2026<br>
-                    Time: 8.00 P.M<br>
-                    Location: Baganbari, asdas
-                </div>
+        <!-- 5. WALIMA -->
+        <div class="card card-event" id="slide-4">
+            <h1 class="fade-text delay-1">Walima</h1>
+            <p class="fade-text delay-2">A feast to bless the couple and celebrate their new life.</p>
+            <p class="fade-text delay-3">Coming Soon<br>Venue: TBA</p>
+        </div>
 
-                <!-- Dress Colors moved right under details -->
-                <div class="p2-dress-section">
-                    <div class="p2-dress-header">
-                        <div class="p2-dress-line"></div>
-                        <span>Dress Colors</span>
-                        <div class="p2-dress-line"></div>
-                    </div>
-                    <div class="p2-colors-container">
-                        <div class="color-circle" style="background: #d6519c;"></div>
-                        <div class="color-circle" style="background: #ffd700;"></div>
-                        <div class="color-circle" style="background: #ff00ff;"></div>
-                        <div class="color-circle" style="background: #ffe87c;"></div>
-                        <div class="color-circle" style="background: #ff7f50;"></div>
-                    </div>
-                </div>
-
-                <!-- Absolute positioned footer -->
-                <div class="p2-footer">
-                    <div class="p2-loc-title">Location</div>
-                    <a href="#" class="p2-loc-pill" style="background: #e5b13a; text-decoration: none; padding: 10px 30px; border-radius: 50px; display: flex; align-items: center; gap: 8px; color: #4a3728;">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span style="font-family: 'MonteCarlo', cursive; font-size: 1.5rem;">Baganbari on GMap</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- PAGE 3: AKHT -->
-        <section class="page" id="page3" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
-            <h2 class="title-serif" style="color: var(--gold); margin-bottom: 25px;">02 • AKHT</h2>
-            <div class="event-card-box" style="border-color: var(--gold);">
-                <h3 style="color: var(--gold); margin-bottom: 10px; font-family: 'Cinzel', serif;">NIKAH CEREMONY</h3>
-                <p style="font-weight: 600; color: var(--gold); font-size: 1rem;">4:30 PM</p>
-                <p style="margin: 10px 0 5px; font-weight: 500;">Suhrawardy Mosque Garden</p>
-            </div>
-        </section>
-
-        <!-- PAGE 4: WEDDING -->
-        <section class="page bg-cream" id="page4" style="padding: 45px 30px;">
-            <h2 class="title-serif" style="color: var(--dark-green); margin-bottom: 25px;">03 • WEDDING</h2>
-            <div class="event-card-box">
-                <h3 style="color: var(--dark-green); margin-bottom: 10px; font-family: 'Cinzel', serif;">THE BRIDE'S RECEPTION</h3>
-                <p style="font-weight: 600; color: var(--dark-green); font-size: 1rem;">8:00 PM</p>
-                <p style="margin: 10px 0 5px; font-weight: 500;">Grand Heritage Ball Room</p>
-            </div>
-        </section>
-
-        <!-- PAGE 5: RSVP -->
-        <section class="page" id="page5" style="background-color: var(--dark-green); color: white; padding: 45px 30px;">
-            <div style="background: var(--cream); color: var(--text-dark); border-radius: 25px; padding: 30px 20px; text-align: center;">
-                <h2 class="title-serif" style="color: var(--dark-green); font-size: 1.6rem; margin-bottom: 10px;">RSVP</h2>
-                <input type="text" placeholder="Your Full Name" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #ddd;" />
-                <button style="width: 100%; padding: 15px; background: var(--dark-green); color: white; border: none; border-radius: 10px; font-weight: 600;" onclick="alert('Thank you!')">CONFIRM</button>
-            </div>
-        </section>
-    </div>
-
-    <div class="indicators" id="indicators">
-        <button class="indicator-dot active" data-index="0"></button>
-        <button class="indicator-dot" data-index="1"></button>
-        <button class="indicator-dot" data-index="2"></button>
-        <button class="indicator-dot" data-index="3"></button>
-        <button class="indicator-dot" data-index="4"></button>
     </div>
 </div>
-
-<!-- BACKGROUND AUDIO -->
-<audio id="bgAudio" loop preload="auto">
-    <source src="Wedding/Perfect By Ed Sheeran.mp3" type="audio/mpeg" />
-</audio>
 
 <script>
-    (function () {
-        const envelopeWrapper = document.getElementById('envelopeWrapper');
-        const mainEnvelope = document.getElementById('mainEnvelope');
-        const cardWrapper = document.getElementById('cardWrapper');
-        const track = document.getElementById('cardTrack');
-        const dots = document.querySelectorAll('.indicator-dot');
-        const bgAudio = document.getElementById('bgAudio');
+    /* 
+       CORE SCRIPT: 
+       Handles the flow, music, and sliding logic.
+    */
 
-        let currentIndex = 0;
-        const totalPages = 5;
-        let isTransitioning = false;
-        let isCardReady = false;
+    let currentSlide = 0;
+    const totalSlides = 5; // Intro, Holud, Akt, Wedding, Walima
+    let startX = 0;
+    
+    const slider = document.getElementById('slider');
+    const bgMusic = document.getElementById('bgMusic');
 
-        // Open Envelope
-        mainEnvelope.addEventListener('click', () => {
-            envelopeWrapper.classList.add('open');
-            bgAudio.play().catch(() => {});
-            setTimeout(() => {
-                envelopeWrapper.classList.add('fade-out');
-                cardWrapper.classList.add('visible');
-                setTimeout(() => { isCardReady = true; }, 600);
-            }, 1200);
-        });
+    /* VOLUME SETTING: Always 35% as requested (0.35) */
+    bgMusic.volume = 0.35;
 
-        // Smooth Page Navigation
-        function goTo(index) {
-            if (!isCardReady || isTransitioning) return;
-            if (index < 0) index = 0;
-            if (index >= totalPages) index = totalPages - 1;
-            isTransitioning = true;
-            currentIndex = index;
-            track.style.transform = `translateX(${-index * 20}%)`;
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-            setTimeout(() => { isTransitioning = false; }, 600);
+    /**
+     * openEnvelope():
+     * Triggers when the user taps the envelope. Starts music and opens the envelope.
+     */
+    function openEnvelope() {
+        // Play music - Browser requires a tap/click to allow audio
+        bgMusic.play().catch(e => console.log("Audio play blocked", e));
+
+        // Start the envelope opening animation
+        document.getElementById('envelope').classList.add('open');
+        
+        // Make the cards visible in the background
+        slider.style.display = 'block';
+
+        // Trigger the first card (Intro) appearance after a short delay
+        setTimeout(() => {
+            document.getElementById('slide-0').classList.add('active');
+        }, 800);
+    }
+
+    /**
+     * SWIPE DETECTION:
+     * Handles touch for mobile and mouse dragging for desktop.
+     */
+    document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    document.addEventListener('touchend', e => handleSwipe(e.changedTouches[0].clientX));
+    
+    document.addEventListener('mousedown', e => startX = e.clientX);
+    document.addEventListener('mouseup', e => handleSwipe(e.clientX));
+
+    function handleSwipe(endX) {
+        // Only allow swiping if the invitation has been opened
+        if (!document.getElementById('envelope').classList.contains('open')) return;
+
+        const distance = startX - endX;
+        const threshold = 50; // Minimum distance (pixels) to count as a swipe
+
+        if (Math.abs(distance) > threshold) {
+            if (distance > 0 && currentSlide < totalSlides - 1) {
+                // Swipe Left -> Show Next Slide
+                goToSlide(currentSlide + 1);
+            } else if (distance < 0 && currentSlide > 0) {
+                // Swipe Right -> Show Previous Slide
+                goToSlide(currentSlide - 1);
+            }
         }
+    }
 
-        // Click Dots to Navigate
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const idx = parseInt(dot.getAttribute('data-index'));
-                if (idx !== currentIndex) goTo(idx);
-            });
-        });
+    /**
+     * goToSlide(index):
+     * Switches which card is currently "active".
+     */
+    function goToSlide(index) {
+        // Hide previous card
+        document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+        
+        // Show new active card
+        currentSlide = index;
+        document.getElementById(`slide-${currentSlide}`).classList.add('active');
+    }
 
-        // Swipe Navigation for Mobile
-        let startX = 0;
-        cardWrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive: true});
-        cardWrapper.addEventListener('touchend', e => {
-            const deltaX = e.changedTouches[0].clientX - startX;
-            if (Math.abs(deltaX) < 50) return;
-            if (deltaX < 0) goTo(currentIndex + 1);
-            else goTo(currentIndex - 1);
-        }, {passive: true});
-    })();
+    /* 
+       --- DESIGNER TIPS FOR CHANGES ---
+
+       1. CHANGE TEXT CONTENT: 
+          Find the <h1> and <p> tags in the HTML body above. 
+          Edit the text inside those tags for each event.
+
+       2. CHANGE CARD COLOR: 
+          Look at the top under :root { --card-bg-color: #FFFFF0; }.
+          Change #FFFFF0 to any other hex code you like.
+
+       3. CHANGE HOW FAST TEXT APPEARS:
+          Change --fade-duration: 2s; in the :root section. 
+
+       4. CHANGE MUSIC VOLUME:
+          Look at the script line: 'bgMusic.volume = 0.35;'. 
+          0.1 is quiet, 1.0 is full volume.
+
+       5. CHANGE CARD BACKGROUND IMAGES:
+          Look at the CSS sections like .card-intro, .card-henna, etc.
+          Update the URL paths in 'url(...)' to point to new image files.
+    */
 </script>
+
 </body>
 </html>
