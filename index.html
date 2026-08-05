@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Monte+Carlo&family=Amiri:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/style.css?v=1.0.5">
+    <link rel="stylesheet" href="css/style.css?v=1.0.7">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
 <div id="app">
     <!-- Background Music -->
     <audio id="bgMusic" preload="auto" loop>
-        <source src="Wedding/Jashn-E-Bahaaraa-Flute.mp3?v=1.0.5" type="audio/mpeg">
+        <source src="Wedding/Jashn-E-Bahaaraa-Flute.mp3?v=1.0.7" type="audio/mpeg">
     </audio>
 
     <!-- Envelope -->
@@ -137,23 +137,23 @@
         <div class="card card-wedding" id="slide-3">
             <div class="wedding-content">
 
-                <p class="wedding-invite-text fade-text delay-1"></br></br></br></br></br>We Joyfully invite You To the</p>
-                <h2 class="wedding-title-main fade-text delay-2">Wedding Ceremony</h2>
+                <div class="wedding-invite-text fade-text delay-1">We Joyfully invite You To the </div>
+                <div class="wedding-title-main fade-text delay-2">Wedding Ceremony</div>
 
                 <div class="wedding-date-row fade-text delay-3">
                     On Friday <span class="script-text">10<sup>th</sup> September, 2026</span>
                 </div>
 
                 <div class="wedding-venue-row fade-text delay-4">
-                    <span class="script-text">King Of Chittagong,</span> Panchlaish, Chattogram
+                    <span class="script-text">King Of Chittagong,</span> </br>Panchlaish, Chattogram
                 </div>
 
                 <div class="wedding-time-row fade-text delay-5">
                     <span class="bar">|</span> Time : 8:00 P.M. <span class="bar">|</span>
                 </div>
-                <p class="wedding-honor-text fade-text delay-6">
+                <div class="wedding-honor-text fade-text delay-6">
                     Your presence will make our day truly complete.
-                </p>
+                </div>
 
             </div>
         </div>
@@ -184,15 +184,15 @@
         </div>
     </div>
 
-    <!-- Music Toggle -->
-    <button id="music-toggle" aria-label="Toggle music">🔊</button>
+    <!-- Blessings -->
+    <div class="blessings-text">Blessings Only</div>
 </div>
 
 <script>
     /**
      * CONFIGURATION
      */
-    const version = "1.0.5"; // Increment this to force cache clear
+    const version = "1.0.7"; // Increment this to force cache clear
     const config = {
         totalSlides: 5,
         weddingEvents: [
@@ -224,7 +224,6 @@
     const slider = document.getElementById('slider');
     const bgMusic = document.getElementById('bgMusic');
     const timerContainer = document.getElementById('timer-container');
-    const musicToggle = document.getElementById('music-toggle');
     const loadingOverlay = document.getElementById('loading-overlay');
     const quranWrapper = document.getElementById('quranWrapper');
     const invitationContent = document.getElementById('invitationContent');
@@ -241,7 +240,7 @@
     let quranTimer; // Timer for Quran auto-hide
     let peekInterval; // Timer for swipe hint animation
 
-    bgMusic.volume = 0.28;
+    bgMusic.volume = 0.18;
 
     /**
      * Hides the Quran section and shows the invitation content
@@ -355,11 +354,8 @@
         if (!musicPlaying) {
             bgMusic.play().then(() => {
                 musicPlaying = true;
-                musicToggle.textContent = '🔊';
-                musicToggle.classList.add('visible');
             }).catch(() => {
-                musicToggle.textContent = '🔇';
-                musicToggle.classList.add('visible');
+                // Auto-play blocked by browser; music stays off
             });
         }
     }
@@ -431,11 +427,6 @@
         if (!envelopeOpened) return;
         if (e.key === 'ArrowRight' && currentSlide < config.totalSlides - 1) goToSlide(currentSlide + 1);
         else if (e.key === 'ArrowLeft' && currentSlide > 0) goToSlide(currentSlide - 1);
-    });
-
-    musicToggle.addEventListener('click', () => {
-        if (musicPlaying) { bgMusic.pause(); musicPlaying = false; musicToggle.textContent = '🔇'; }
-        else { bgMusic.play().then(() => { musicPlaying = true; musicToggle.textContent = '🔊'; }); }
     });
 
     /**
