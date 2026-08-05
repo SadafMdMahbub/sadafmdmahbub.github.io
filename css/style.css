@@ -594,11 +594,9 @@ html, body {
     font-weight: 400;
 }
 
-.dots-line {
-    width: 57%;
-    border-bottom: 2px dotted #000;
-    margin: 5px 0;
-    height: 1px;
+.underline {
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .color-palate {
@@ -682,22 +680,23 @@ html, body {
 }
 
 .akt-title-main {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3.5rem !important;
+    font-family: 'Monte Carlo', cursive;
+    font-size: 2.4rem !important;
     color: #000;
-    margin: 0 0 10px 0 !important;
+    margin: 0 0 5px 0 !important;
     text-align: center;
 }
 
 .akt-message {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1rem !important;
+    font-size: 0.6rem !important;
+    width: 65%;
     color: #000;
     line-height: 1.3 !important;
     text-align: center;
-    padding: 0 40px;
+    padding: 0 5px;
     margin-bottom: 40px;
-    font-weight: 400;
+    font-weight: 150;
 }
 
 .akt-details-group {
@@ -711,39 +710,47 @@ html, body {
 
 .akt-info-row {
     display: flex;
+    flex-direction: column;
     width: 100%;
     justify-content: center;
-    align-items: flex-start;
-    margin-bottom: 8px;
+    align-items: center;
+    margin-bottom: 15px;
     font-family: 'Montserrat', sans-serif;
 }
 
 .akt-label {
-    font-size: 1.6rem;
+    font-size: .8rem;
     font-weight: 500;
     color: #000;
-    margin-right: 15px;
-    white-space: nowrap;
+    margin-bottom: 2px;
 }
 
 .akt-value {
-    font-size: 1.6rem;
+    font-size: .8rem;
     font-weight: 500;
     color: #000;
-    text-align: left;
-    line-height: 1.1;
+    text-align: center;
+    line-height: 1.2;
 }
 
 .akt-location-btn {
-    background: #e2a188; /* Match the peach color in design */
-    padding: 8px 25px;
-    border-radius: 30px;
+    background: #e2a188;
+    padding: 5px 20px;
+    border-radius: 50px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 10;
     transition: transform 0.3s ease;
+    width: fit-content;
+
+    /* New positioning rules */
+    position: fixed;
+    bottom: 90px; /* Adjust this to change distance from the very bottom */
+    transform: translateX(-50%);
 }
 
 .akt-location-btn:hover {
@@ -834,7 +841,7 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 185px; /* Adjusted from 120px to prevent overflow */
+    padding-top: 177px; /* Adjusted from 120px to prevent overflow */
     z-index: 5;
 }
 
