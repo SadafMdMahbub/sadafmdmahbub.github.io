@@ -316,6 +316,7 @@ html, body {
 .delay-3 { transition-delay: 1s; }
 .delay-4 { transition-delay: 1.1s; }
 .delay-5 { transition-delay: 1.2s; }
+.delay-6 { transition-delay: 1.3s; }
 
 /* ---- GLOBAL TYPOGRAPHY INSIDE CARDS ---- */
 .card h2 {
@@ -669,7 +670,7 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 150px; /* Adjusted from 180px to prevent overflow */
+    padding-top: 140px; /* Adjusted from 180px to prevent overflow */
     z-index: 5;
 }
 
@@ -681,23 +682,23 @@ html, body {
 
 .akt-title-main {
     font-family: 'Great Vibes', cursive !important;
-    font-size: 2.4rem !important;
+    font-size: 2.8rem !important; /* Slightly larger for the Monte Carlo font */
     color: #000;
-    margin: 0 0 5px 0 !important;
+    margin: 0 0 10px 0 !important;
     text-align: center;
-    line spacing: 4px;
 }
 
 .akt-message {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.6rem !important;
-    width: 65%;
+    font-size: 0.7rem !important;
+    width: 72%;
     color: #000;
-    line-height: 1.3 !important;
+    line-height: 1.2 !important;
     text-align: center;
     padding: 0 5px;
     margin-bottom: 40px;
     font-weight: 150;
+    padding bottom: 15 px;
 }
 
 .akt-details-group {
@@ -711,26 +712,26 @@ html, body {
 
 .akt-info-row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Label and value side-by-side as in image */
     width: 100%;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
+    align-items: baseline;
+    margin-bottom: 5px; /* Increased distance between the 3 rows */
     font-family: 'Montserrat', sans-serif;
 }
 
 .akt-label {
-    font-size: .8rem;
+    font-size: .7rem;
     font-weight: 500;
     color: #000;
-    margin-bottom: 2px;
+    margin-right: 10px; /* Gap between "Venue:" and the name */
 }
 
 .akt-value {
-    font-size: .8rem;
-    font-weight: 500;
+    font-size: .85rem; /* Enlarged as requested */
+    font-weight: 700; /* Bolder as requested */
     color: #000;
-    text-align: center;
+    text-align: left;
     line-height: 1.2;
 }
 
@@ -782,8 +783,9 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 100px; /* Adjusted from 120px to prevent overflow */
-    z-index: 5;
+    justify-content: flex-start; /* Push everything to the top */
+    padding: 100 20px; /* Shifted way up */
+    z-index: 3;
 }
 
 /* Ensure flow layout works with animations */
@@ -792,40 +794,78 @@ html, body {
     transform: translateY(0) !important;
 }
 
+.wedding-invite-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.42rem;
+    color: #000;
+    margin-bottom: 5px;
+    font-weight: 300;
+}
+
 .wedding-title-main {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3.5rem !important;
-    color: #4e342e;
-    margin: 0 0 25px 0 !important;
+    font-family: 'Great Vibes', cursive !important;
+    font-size: 2.3rem !important;
+    color: #000;
+    margin: 0 0 10px 0 !important;
     text-align: center;
 }
 
-.wedding-details-group {
-    width: 100%;
-    max-width: 320px;
+.wedding-date-row {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    color: #000;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.wedding-date-row .script-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+.wedding-venue-row {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    color: #000;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.wedding-venue-row .script-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.6rem;
+    vertical-align: middle;
+}
+
+.wedding-time-row {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    color: #000;
+    margin-bottom: 2px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    gap: 5px;
+    font-weight: 500;
 }
 
-.wedding-info-row {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: baseline;
-    margin-bottom: 12px;
-}
-
-.wedding-info-row .label {
+.wedding-time-row .bar {
+    color: #a67c00;
+    font-weight: 300;
     font-size: 1.2rem;
-    font-weight: 600;
-    color: #4e342e;
-    margin-right: 15px;
 }
 
-.wedding-info-row .detail {
-    font-size: 1.2rem;
-    color: #4e342e;
+.wedding-honor-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.38rem;
+    color: #000;
+    line-height: 1.2;
+    max-width: 80%;
+    text-align: center;
+    font-weight: 400;
+    padding: 0 5px;
+    margin-top: 0;
+    margin-bottom: 2px;
 }
 
 /* ============================================================
