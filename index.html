@@ -88,12 +88,10 @@
                         <div class="code-label underline">Dress code: Girls </div>
                         <em>Lehenga/ saree</em>
 
-                        <div class="color-names-para">&nbsp;&nbsp;&nbsp;&nbsp;Golden Yellow/ Rasberry/ &nbsp;&nbsp;&nbsp;&nbsp;Mustard Yellow/ Terracotta/ &nbsp;&nbsp;&nbsp;&nbsp;Rose pink</div>
+                        <div class="color-names-para">&nbsp;&nbsp;&nbsp;&nbsp;Golden Yellow/ Rasberry/ &nbsp;&nbsp;&nbsp;&nbsp;Rose pink</div>
                         <div class="color-palate">
-                            <span class="circle" style="background: #FFD700;"></span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="circle" style="background: #FFD700;"></span>
                             <span class="circle" style="background: #D21F5A;"></span>
-                            <span class="circle" style="background: #E3A018;"></span>
-                            <span class="circle" style="background: #E2725B;"></span>
                             <span class="circle" style="background: #E77394;"></span>
                         </div>
                     </div>
@@ -101,7 +99,7 @@
                     <div class="boys-code">
                         <div class="code-label underline"><br>Dress Code: Boys</div>
                         <div class><em>Panjabi</em></div>
-                        <div class="color-names-para">&nbsp;&nbsp;&nbsp;&nbsp;Orange &nbsp;&nbsp;&nbsp;&nbsp;<span class="circle" style="background: #FF8C00;"></span></div>
+                        <div class="color-names-para">&nbsp;&nbsp;&nbsp;&nbsp;White &nbsp;&nbsp;&nbsp;&nbsp;<span class="circle" style="background: #FFFFFF;"></span></div>
                     </div>
                 </div>
 
@@ -196,10 +194,33 @@
      * CONFIGURATION
      */
     const version = "1.0.15"; // Increment this to force cache clear
+
+    // ══════════════════════════════════════════════════════════
+    // SECRET LINK SETUP
+    // ══════════════════════════════════════════════════════════
+    // The plain link (https://sadafmdmahbub.github.io/) hides the Holud card.
+    // The secret link (https://sadafmdmahbub.github.io/?yellow+yes)
+    // shows the Holud card for the few invited guests. The "+" is how a
+    // space appears in a link, so it reads as "yellow yes" — looks like an
+    // innocent answer rather than a special link.
+    const SECRET_WORD = "yellow yes"; // appears in the link as: ?yellow+yes
+    // Normalize the query so the secret still works even if a chat app
+    // re-encodes the link when sharing ("%20" or "%2B" instead of "+").
+    let normalizedSearch = window.location.search;
+    try {
+        normalizedSearch = decodeURIComponent(normalizedSearch);
+    } catch (e) { /* malformed encoding — keep the raw string */ }
+    normalizedSearch = normalizedSearch.replace(/\+/g, " ");
+    const showHolud = normalizedSearch === "?" + SECRET_WORD;
+
     const config = {
-        totalSlides: 5,
-        weddingEvents: [
+        totalSlides: showHolud ? 5 : 4, // Intro + Holud/Akt/Wedding/Walima (or without Holud)
+        weddingEvents: showHolud ? [
             { name: "Holud", month: 8, day: 4 },
+            { name: "Akt", month: 8, day: 5 },
+            { name: "Wedding", month: 8, day: 10 },
+            { name: "Walima", month: 8, day: 12 }
+        ] : [
             { name: "Akt", month: 8, day: 5 },
             { name: "Wedding", month: 8, day: 10 },
             { name: "Walima", month: 8, day: 12 }
@@ -209,7 +230,7 @@
             'Wedding/envelopLeft.png',
             'Wedding/EnvelopRight.png',
             'Wedding/(BG)IntroductionCard.png',
-            'Wedding/(BG)henna.png',
+            ...(showHolud ? ['Wedding/(BG)henna.png'] : []),
             'Wedding/(BG)TheAkt.png',
             'Wedding/(BG)TheWedding.png',
             'Wedding/(BG)Walima.png'
@@ -231,6 +252,16 @@
     const quranWrapper = document.getElementById('quranWrapper');
     const invitationContent = document.getElementById('invitationContent');
     const envelope = document.getElementById('envelope');
+
+    // ---- Remove the Holud card if the secret link is not used ----
+    if (!showHolud) {
+        const holudCard = document.getElementById('slide-1');
+        if (holudCard) holudCard.remove();
+        // Renumber the remaining slides (slide-2 → slide-1, etc.)
+        document.querySelectorAll('.card[id^="slide-"]').forEach((el, i) => {
+            el.id = `slide-${i}`;
+        });
+    }
 
     // ---- State variables ----
     let currentSlide = 0;

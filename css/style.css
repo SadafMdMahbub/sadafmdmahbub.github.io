@@ -985,7 +985,10 @@ html, body {
    ============================================================ */
 .blessings-text {
     position: absolute;
-    bottom: 3px;
+    /* 3px below the card, on every card:
+       slider = 80vh tall + 50px top margin, centered in a 100vh app
+       → card bottom = 10vh (centering) + 50px + 80vh = 90vh + 50px */
+    top: calc(90vh + 30px);
     left: 0;
     width: 100%;
     text-align: center;
