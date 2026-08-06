@@ -451,7 +451,7 @@ html, body {
 /* ---- Quran section: Centered in middle with slide transitions ---- */
 .quran-wrapper {
     position: absolute; /* Take out of flow to appear in middle */
-    top: 50%;
+    top: 40%; /* Shifted up from 50% */
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
@@ -540,8 +540,8 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Changed from center to align left */
-    padding-top: 117px;
-    padding-left: 55px; /* Shifted to the left with some padding */
+    padding-top: 122px;
+    padding-left: 55px; /* Original position - unchanged */
 }
 
 .henna-join {
@@ -556,31 +556,38 @@ html, body {
 .henna-title {
     font-family: 'Great Vibes', cursive;
     font-size: 3rem;
-    color: #41563D;
+    color: #A58620; /* Dark gold */
     margin-bottom: 8px;
     line-height: 1;
-    padding-left: 20px; /* Shift Holud a bit to the right */
+    padding-left: 20px; /* Original position - unchanged */
 }
 
 .henna-details {
     font-family: 'Montserrat', sans-serif;
     font-size: .75rem;
+    font-weight: 570;
     color: #000;
-    line-height: 1.2;
-    margin-bottom: 2px; /* Reduced from 30px */
+    line-height: 1.4;
+    margin-bottom: 10px; /* Gap before dress code (was two <br> tags) */
     text-align: left;
-    padding-right: 40px;
-    margin-left: -20px; /* Shift venue block a bit left */
+    padding-right: 30px;
+    margin-left: -10px; /* Small shift right */
+}
+
+.henna-venue-address {
+    font-size: .68rem;
+    padding-left: 47px; /* Align under the venue name, after the 'Venue:' label */
+    font-style: italic;
 }
 
 .henna-dress-code {
     width: 100%;
     max-width: 280px;
     text-align: left;
-    margin-top: 1px; /* Reduced from 10px */
-    margin-bottom: 0 .3px;
+    margin-top: 0; /* Reduced from 10px */
+    margin-bottom: 0 1px;
     padding-right: 20px;
-    margin-left: -20px; /* Shift dress-code block a bit left */
+    margin-left: -10px; /* Small shift right */
 }
 
 .girls-code, .boys-code {
@@ -589,7 +596,7 @@ html, body {
 
 .code-label {
     font-family: 'Montserrat', sans-serif;
-    font-size: .7rem;
+    font-size: .8rem;
     font-weight: 700;
     color: #000;
 }
@@ -603,19 +610,22 @@ html, body {
 .underline {
     text-decoration: underline;
     text-underline-offset: 4px;
+    margin-bottom: 3px;
 }
 
-.color-palate {
-    display: flex;
-    gap: 12px;
-    margin-top: 2px;
+.color-palette {
+  display: flex;
+  gap: 3px;
+  margin-top: 2px;
+  border: 3px solid #ccc; /* Width, style, and color */
 }
+
 
 .color-names-para {
-    width: 40%;
+    width: 68%;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 400;
+    font-size: 0.7rem;
+    font-weight: 470;
     font-style: italic;
     color: #000;
     line-height: 1.3;
@@ -632,19 +642,30 @@ html, body {
     vertical-align: middle; /* Aligns circle nicely beside inline text (boys "Orange") */
 }
 
+/* Full-width wrapper pinned to the card so the pill centers on the card,
+   not on the padded content box (which is shifted right by the left padding) */
+.henna-btn-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8px; /* 15px above the bottom of the card */
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+}
+
 .henna-location-btn {
     background: #fff;
-    padding: 10px 20px;
+    padding: 7px 16px;
     border-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: center; /* Center content inside the button */
-    gap: 10px;
+    gap: 7px;
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     z-index: 10;
     transition: transform 0.3s ease;
-    margin: auto auto 25px auto; /* Push to bottom center, keeping some distance from the bottom */
     width: fit-content; /* Ensure it wraps content */
 }
 
@@ -654,12 +675,12 @@ html, body {
 
 .btn-text {
     font-family: 'Great Vibes', cursive;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #000;
 }
 
 .pin-icon {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 /* ============================================================
@@ -726,16 +747,9 @@ html, body {
     font-family: 'Montserrat', sans-serif;
 }
 
-.akt-label {
-    font-size: .7rem;
-    font-weight: 500;
-    color: #000;
-    margin-right: 10px; /* Gap between "Venue:" and the name */
-}
-
 .akt-value {
     font-size: .85rem; /* Enlarged as requested */
-    font-weight: 700; /* Bolder as requested */
+    font-weight: 578; /* Bolder as requested */
     color: #000;
     text-align: left;
     line-height: 1.2;
@@ -761,20 +775,6 @@ html, body {
     transform: translateX(-50%);
 }
 
-.akt-location-btn:hover {
-    transform: scale(1.05);
-}
-
-.akt-location-btn .btn-text {
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.5rem;
-    color: #3e2723;
-}
-
-.akt-location-btn .pin-icon {
-    font-size: 1.2rem;
-}
-
 /* ============================================================
    [CUSTOMISE] CARD 3: THE WEDDING
    ============================================================ */
@@ -790,7 +790,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; /* Push everything to the top */
-    padding: 120px 20px 0 20px; /* Top space via padding (was 5x </br>) */
+    padding: 135px 20px 0 20px; /* Top space via padding (was 5x </br>) */
     z-index: 3;
 }
 
@@ -804,15 +804,15 @@ html, body {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.7rem;
     color: #000;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     font-weight: 1;
 }
 
 .wedding-title-main {
     font-family: 'Great Vibes', cursive !important;
-    font-size: 2.5rem !important;
+    font-size: 2.3rem !important;
     color: #000;
-    margin: 0 0 5px 0 !important;
+    margin: 0 0 3px 0 !important;
     text-align: center;
     font-weight: 500
 }
@@ -871,7 +871,7 @@ html, body {
     text-align: center;
     font-weight: 400;
     padding: 0 5px;
-    margin-top: 4;
+    margin-top: 10px;
     margin-top: 4;
     margin-bottom: 2px;
 }
@@ -985,7 +985,7 @@ html, body {
    ============================================================ */
 .blessings-text {
     position: absolute;
-    bottom: 15px;
+    bottom: 3px;
     left: 0;
     width: 100%;
     text-align: center;
