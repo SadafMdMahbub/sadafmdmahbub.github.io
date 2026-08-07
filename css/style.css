@@ -188,7 +188,7 @@ html, body {
    ============================================================ */
 #timer-container {
     position: absolute;
-    top: 25px;
+    top: 15px;
     width: 100%;
     text-align: center;
     opacity: 0;
@@ -198,16 +198,16 @@ html, body {
 }
 
 .timer-label {
-    font-size: 0.9rem;
+    font-size: 0.68rem;
     color: #8d6e63;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 
 #timer-display {
     font-family: 'Great Vibes', cursive;
-    font-size: 1.5rem;
+    font-size: 1.05rem;
     color: var(--text-main);
 }
 
@@ -215,9 +215,9 @@ html, body {
     position: relative;
     width: 91vw;
     max-width: 428px;
-    height: 80vh;
+    height: 82vh;
     display: none;
-    margin-top: 50px;
+    margin-top: 15px;
     touch-action: none;
     user-select: none;
 }
