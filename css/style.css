@@ -283,6 +283,14 @@ html, body {
     transition: all 0.8s ease-out;
     pointer-events: none;
     overflow-y: auto;
+    scrollbar-width: none;    /* Firefox: hide the scrollbar */
+    -ms-overflow-style: none; /* Legacy Edge/IE: hide the scrollbar */
+}
+
+/* Chrome/Safari/new Edge: hide the scrollbar on cards.
+   Cards remain scrollable on small screens (overflow-y: auto above). */
+.card::-webkit-scrollbar {
+    display: none;
 }
 
 .card.active {
@@ -1008,7 +1016,7 @@ html, body {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 5px;
+    bottom: 20px;
 }
 
 /* Responsive scaling for mobile devices */
