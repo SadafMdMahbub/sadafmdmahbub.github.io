@@ -650,7 +650,9 @@ html, body {
     right: 0;
     bottom: 8px; /* 15px above the bottom of the card */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px; /* 3px gap between pill button and blessings text */
     z-index: 10;
 }
 
@@ -984,20 +986,29 @@ html, body {
    BLESSINGS TEXT & RESPONSIVE SCALING
    ============================================================ */
 .blessings-text {
-    position: absolute;
-    /* 3px below the card, on every card:
-       slider = 80vh tall + 50px top margin, centered in a 100vh app
-       → card bottom = 10vh (centering) + 50px + 80vh = 90vh + 50px */
-    top: calc(90vh + 30px);
-    left: 0;
-    width: 100%;
-    text-align: center;
     font-family: 'Great Vibes', cursive;
     font-size: 1.1rem;
     color: var(--text-sub);
     letter-spacing: 1px;
+    text-align: center;
     pointer-events: none;
-    z-index: 200;
+    white-space: nowrap;
+}
+
+/* Henna: blessings text sits inside the wrap, 3px below the pill button */
+.henna-btn-wrap .blessings-text {
+    position: static;
+}
+
+/* All cards (incl. invitation): 5px above the bottom of the card */
+.card-intro .blessings-text,
+.card-akt .blessings-text,
+.card-wedding .blessings-text,
+.card-walima .blessings-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
 }
 
 /* Responsive scaling for mobile devices */
