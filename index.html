@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Monte+Carlo&family=Amiri:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/style.css?v=1.0.31">
+    <link rel="stylesheet" href="css/style.css?v=1.0.36">
 </head>
 <body>
 
@@ -74,6 +74,7 @@
 
         <!-- CARD 1 – GAYE HOLUD -->
         <div class="card card-henna" id="slide-1">
+            <img src="Wedding/PictureBeforeHennastart.png?v=1.0.15" alt="Holud" class="animated-start-picture" />
             <div class="henna-content">
                 <div class="henna-join fade-text delay-1">Join us for a colorful</div>
                 <div class="henna-title fade-text delay-2">Holud</div>
@@ -115,7 +116,7 @@
 
         <!-- CARD 2 – AKHD CEREMONY -->
         <div class="card card-akt" id="slide-2">
-            <img src="Wedding/AktAnimatedPictureBeforeText.png?v=1.0.15" alt="Couple" class="akt-animated-picture" />
+            <img src="Wedding/PictureBeforeAktstart.png?v=1.0.15" alt="Couple" class="animated-start-picture" />
             <div class="akt-content">
                 <img src="Wedding/AktArabicCaligraphy.png?v=1.0.15" alt="Arabic Calligraphy" class="arabic-caligraphy-img fade-text delay-1" />
                 <h2 class="akt-title-main fade-text delay-2">Akhd Ceremony</h2>
@@ -140,6 +141,7 @@
 
         <!-- CARD 3 – THE WEDDING -->
         <div class="card card-wedding" id="slide-3">
+            <img src="Wedding/PictureBeforeWeddingstart.png?v=1.0.15" alt="Wedding" class="animated-start-picture" />
             <div class="wedding-content">
 
                 <img src="Wedding/WeddingArabicCaligraphy.png?v=1.0.15" alt="Arabic Calligraphy" class="arabic-caligraphy-img fade-text delay-1" />
@@ -233,10 +235,11 @@
             'Wedding/envelopLeft.png',
             'Wedding/EnvelopRight.png',
             'Wedding/(BG)IntroductionCard.png',
-            ...(showHolud ? ['Wedding/(BG)henna.png'] : []),
+            ...(showHolud ? ['Wedding/(BG)henna.png', 'Wedding/PictureBeforeHennastart.png'] : []),
             'Wedding/(BG)TheAkt.png',
-            'Wedding/AktAnimatedPictureBeforeText.png',
+            'Wedding/PictureBeforeAktstart.png',
             'Wedding/(BG)TheWedding.png',
+            'Wedding/PictureBeforeWeddingstart.png',
             'Wedding/(BG)Walima.png'
         ].map(url => `${url}?v=${version}`),
         quranTiming: {
@@ -277,7 +280,6 @@
     let envelopeOpened = false;
     let quranTimer; // Timer for Quran auto-hide
     let peekInterval; // Timer for swipe hint animation
-    let aktPictureShown = false; // Akt couple picture animation shown only once
 
     bgMusic.volume = 0.18;
 
@@ -412,20 +414,23 @@
         const newSlide = document.getElementById(`slide-${currentSlide}`);
         if (newSlide) newSlide.classList.add('active');
 
-        // Akt card: gracefully show the couple picture once (3s), then reveal the text
-        if (newSlide && newSlide.classList.contains('card-akt') && !aktPictureShown) {
-            aktPictureShown = true;
-            const picture = newSlide.querySelector('.akt-animated-picture');
-            if (picture) {
-                newSlide.classList.add('akt-picture-visible');
-                picture.classList.add('show');
+        // Start picture: gracefully show each time (1.3s), then reveal the text
+        function playStartPicture(card) {
+            const picture = card.querySelector('.animated-start-picture');
+            if (!picture) return;
+            card.classList.add('start-picture-visible');
+            picture.classList.add('show');
+            setTimeout(() => {
+                picture.classList.remove('show');
                 setTimeout(() => {
-                    picture.classList.remove('show');
-                    setTimeout(() => {
-                        newSlide.classList.remove('akt-picture-visible');
-                    }, 1000);
-                }, 3000);
-            }
+                    card.classList.remove('start-picture-visible');
+                }, 1000);
+            }, 1300);
+        }
+
+        // Any card with a start picture plays it every time it's shown (Henna, Akt, Wedding)
+        if (newSlide && newSlide.querySelector('.animated-start-picture')) {
+            playStartPicture(newSlide);
         }
 
         if (currentSlide === 0) {

@@ -718,27 +718,27 @@ html, body {
     transform: translateY(0) !important;
 }
 
-/* Akt: couple picture overlay shown once before the text */
-.akt-animated-picture {
+/* Henna, Akt & Wedding: start picture covers the card, shown once before the text */
+.animated-start-picture {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 52%;
-    max-width: 240px;
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px; /* Match the card corners */
     z-index: 30;
     opacity: 0;
     transition: opacity 1s ease;
     pointer-events: none;
 }
 
-.akt-animated-picture.show {
+.animated-start-picture.show {
     opacity: 1;
 }
 
 /* While the picture is showing, keep the text hidden */
-.card-akt.akt-picture-visible .fade-text {
+.card.start-picture-visible .fade-text {
     opacity: 0 !important;
     transform: translateY(20px) !important;
 }
