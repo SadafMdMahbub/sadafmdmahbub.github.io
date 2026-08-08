@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Monte+Carlo&family=Amiri:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/style.css?v=1.0.19">
+    <link rel="stylesheet" href="css/style.css?v=1.0.21">
 </head>
 <body>
 
@@ -116,10 +116,11 @@
         <!-- CARD 2 – AKHD CEREMONY -->
         <div class="card card-akt" id="slide-2">
             <div class="akt-content">
-                <h2 class="akt-title-main fade-text delay-1">Akhd Ceremony</h2>
-                <p class="akt-message fade-text delay-2">With the grace of Allah, we begin our forever. We'd love for you to share this special moment with us.</p>
+                <div class="arabic-text fade-text delay-1">دَعْوَة لِحُضُور عَقْد قِرَان</div>
+                <h2 class="akt-title-main fade-text delay-2">Akhd Ceremony</h2>
+                <p class="akt-message fade-text delay-3">With the grace of Allah, we begin our forever. We'd love for you to share this special moment with us.</p>
 
-                <div class="akt-details-group fade-text delay-3">
+                <div class="akt-details-group fade-text delay-4">
                     <div class="akt-info-row">
                         <span class="akt-label"></br>Venue:</span>
                         <span class="akt-value"></br>&nbsp;Railway Masjid, CRB</span>
@@ -141,18 +142,19 @@
         <div class="card card-wedding" id="slide-3">
             <div class="wedding-content">
 
-                <div class="wedding-invite-text fade-text delay-1"></br>We Joyfully invite You To the </div>
-                <div class="wedding-title-main fade-text delay-2">Wedding Ceremony</div>
+                <div class="arabic-text fade-text delay-1">نَتَشَرَّف بِدَعْوَتِكُمْ لِحُضُور حَفْل زِفَافِنَا</div>
+                <div class="wedding-invite-text fade-text delay-2"></br>We Joyfully invite You To the </div>
+                <div class="wedding-title-main fade-text delay-3">Wedding Ceremony</div>
 
-                <div class="wedding-date-row fade-text delay-3">
+                <div class="wedding-date-row fade-text delay-4">
                     On Friday <span class="script-text">10<sup>th</sup> September, 2026</span>
                 </div>
 
-                <div class="wedding-venue-row fade-text delay-4">
+                <div class="wedding-venue-row fade-text delay-5">
                     <span class="script-text">King Of Chittagong,</span> </br>Panchlaish, Chattogram
                 </div>
 
-                <div class="wedding-time-row fade-text delay-5">
+                <div class="wedding-time-row fade-text delay-6">
                     <span class="bar">|</span> Time : 8:00 P.M. <span class="bar">|</span>
                 </div>
                 <div class="wedding-honor-text fade-text delay-6">
@@ -365,15 +367,15 @@
         let targetEvent = events[eventIndex] && now < events[eventIndex].endTime ?
             events[eventIndex] : unfinished[0];
 
-        nameLabel.innerText = "Countdown to " + targetEvent.name;
+        nameLabel.innerText = ""; // Single-line countdown: the event name now lives in the display text
         const diff = targetEvent.startTime - now;
         if (diff > 0) {
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
-            if (d > 0) timeLabel.innerText = d + (d === 1 ? " Day " : " Days ") + "to go";
-            else if (h >= 1) timeLabel.innerText = h + " Hour to go";
-            else timeLabel.innerText = m + " Min to go";
+            if (d > 0) timeLabel.innerText = d + (d === 1 ? " Day" : " Days") + " to go for " + targetEvent.name;
+            else if (h >= 1) timeLabel.innerText = h + (h === 1 ? " Hour" : " Hours") + " to go for " + targetEvent.name;
+            else timeLabel.innerText = m + (m === 1 ? " Min" : " Mins") + " to go for " + targetEvent.name;
         } else {
             timeLabel.innerText = "Happening Now!";
         }
