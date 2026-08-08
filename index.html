@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Monte+Carlo&family=Amiri:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/style.css?v=1.0.21">
+    <link rel="stylesheet" href="css/style.css?v=1.0.31">
 </head>
 <body>
 
@@ -60,13 +60,14 @@
                 <div class="quran-surah">— Surah Ar-Rum (30:21)</div>
             </div>
             <div class="invitation-content" id="invitationContent">
-                <h1 class="intro-title fade-text delay-1">Invitation</h1>
-                <p class="intro-lead fade-text delay-2">We Cordially Invite You To Celebrate</br>The Wedding Events Of<br />Our Son</p>
-                <h2 class="intro-name fade-text delay-3">Mohammed Tazrian</h2>
-                <div class="intro-with fade-text delay-3">with</div>
-                <h2 class="intro-name fade-text delay-3">Tashfiha Faruk.</h2>
-                <p class="intro-parents fade-text delay-4">Daughter of Mohammed Faruk &amp; Rasheda Begum.</p>
-                <div class="intro-regards fade-text delay-5">Regards<br /><strong>Mohammed Musa<br />&amp; Nasrin Sultana.</strong></div>
+                <img src="Wedding/InvitaionArabicCaligraphy.png?v=1.0.15" alt="Arabic Calligraphy" class="arabic-caligraphy-img fade-text delay-1" />
+                <h1 class="intro-title fade-text delay-2">Invitation</h1>
+                <p class="intro-lead fade-text delay-3">We Cordially Invite You To Celebrate</br>The Wedding Events Of<br />Our Son</p>
+                <h2 class="intro-name fade-text delay-4">Mohammed Tazrian</h2>
+                <div class="intro-with fade-text delay-4">with</div>
+                <h2 class="intro-name fade-text delay-4">Tashfiha Faruk.</h2>
+                <p class="intro-parents fade-text delay-5">Daughter of Mohammed Faruk &amp; Rasheda Begum.</p>
+                <div class="intro-regards fade-text delay-6">Regards<br /><strong>Mohammed Musa<br />&amp; Nasrin Sultana.</strong></div>
                 <div class="blessings-text fade-text delay-6">Blessings Only</div>
             </div>
         </div>
@@ -108,15 +109,15 @@
                     <a href="https://maps.app.goo.gl/J93TdScdxwhxtAHRA" target="_blank" class="henna-location-btn fade-text delay-5">
                         <span class="pin-icon">📍</span> <span class="btn-text">Bagan bari Location</span>
                     </a>
-                    <div class="blessings-text fade-text delay-6">Blessings Only</div>
                 </div>
             </div>
         </div>
 
         <!-- CARD 2 – AKHD CEREMONY -->
         <div class="card card-akt" id="slide-2">
+            <img src="Wedding/AktAnimatedPictureBeforeText.png?v=1.0.15" alt="Couple" class="akt-animated-picture" />
             <div class="akt-content">
-                <div class="arabic-text fade-text delay-1">دَعْوَة لِحُضُور عَقْد قِرَان</div>
+                <img src="Wedding/AktArabicCaligraphy.png?v=1.0.15" alt="Arabic Calligraphy" class="arabic-caligraphy-img fade-text delay-1" />
                 <h2 class="akt-title-main fade-text delay-2">Akhd Ceremony</h2>
                 <p class="akt-message fade-text delay-3">With the grace of Allah, we begin our forever. We'd love for you to share this special moment with us.</p>
 
@@ -134,7 +135,6 @@
                         <span class="akt-value">&nbsp;Baad Asr Namaz</span>
                     </div>
                 </div>
-                <div class="blessings-text fade-text delay-6">Blessings Only</div>
             </div>
         </div>
 
@@ -142,7 +142,7 @@
         <div class="card card-wedding" id="slide-3">
             <div class="wedding-content">
 
-                <div class="arabic-text fade-text delay-1">نَتَشَرَّف بِدَعْوَتِكُمْ لِحُضُور حَفْل زِفَافِنَا</div>
+                <img src="Wedding/WeddingArabicCaligraphy.png?v=1.0.15" alt="Arabic Calligraphy" class="arabic-caligraphy-img fade-text delay-1" />
                 <div class="wedding-invite-text fade-text delay-2"></br>We Joyfully invite You To the </div>
                 <div class="wedding-title-main fade-text delay-3">Wedding Ceremony</div>
 
@@ -160,7 +160,6 @@
                 <div class="wedding-honor-text fade-text delay-6">
                     Your presence will make our day truly complete.
                 </div>
-                <div class="blessings-text fade-text delay-6">Blessings Only</div>
 
             </div>
         </div>
@@ -168,7 +167,7 @@
         <!-- CARD 4 – WALIMA -->
         <div class="card card-walima" id="slide-4">
             <div class="walima-content">
-                <div class="walima-arabic fade-text delay-1">بَارَكَ اللَّهُ لَكَ، وَبَارَكَ عَلَيْكَ، وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</div>
+                <img src="Wedding/WalimaArabicCaligraphy.png?v=1.0.15" alt="Arabic Calligraphy" class="arabic-caligraphy-img fade-text delay-1" />
                 <h2 class="walima-title-main fade-text delay-2">Walima</h2>
                 <p class="walima-message fade-text delay-3">With Joyful Hearts, We request The Honor Of<br>Your Presence And Blessing On The Auspicious<br>Occasion Of The Walima Ceremony</p>
 
@@ -236,6 +235,7 @@
             'Wedding/(BG)IntroductionCard.png',
             ...(showHolud ? ['Wedding/(BG)henna.png'] : []),
             'Wedding/(BG)TheAkt.png',
+            'Wedding/AktAnimatedPictureBeforeText.png',
             'Wedding/(BG)TheWedding.png',
             'Wedding/(BG)Walima.png'
         ].map(url => `${url}?v=${version}`),
@@ -277,6 +277,7 @@
     let envelopeOpened = false;
     let quranTimer; // Timer for Quran auto-hide
     let peekInterval; // Timer for swipe hint animation
+    let aktPictureShown = false; // Akt couple picture animation shown only once
 
     bgMusic.volume = 0.18;
 
@@ -410,6 +411,22 @@
         currentSlide = index;
         const newSlide = document.getElementById(`slide-${currentSlide}`);
         if (newSlide) newSlide.classList.add('active');
+
+        // Akt card: gracefully show the couple picture once (3s), then reveal the text
+        if (newSlide && newSlide.classList.contains('card-akt') && !aktPictureShown) {
+            aktPictureShown = true;
+            const picture = newSlide.querySelector('.akt-animated-picture');
+            if (picture) {
+                newSlide.classList.add('akt-picture-visible');
+                picture.classList.add('show');
+                setTimeout(() => {
+                    picture.classList.remove('show');
+                    setTimeout(() => {
+                        newSlide.classList.remove('akt-picture-visible');
+                    }, 1000);
+                }, 3000);
+            }
+        }
 
         if (currentSlide === 0) {
             slider.classList.add('show-swipe');
