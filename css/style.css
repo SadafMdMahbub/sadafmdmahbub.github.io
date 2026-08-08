@@ -1035,6 +1035,7 @@ html, body {
     text-align: center;
     pointer-events: none;
     white-space: nowrap;
+    font-weight: 700;
 }
 
 /* Henna: blessings text sits inside the wrap, 3px below the pill button */
