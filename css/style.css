@@ -23,8 +23,8 @@
 
 html, body {
     width: 100%;
-    height: 100%;
-    overflow: hidden; /* Prevent scrolling the whole page */
+    height: auto;
+    overflow: visible; /* The page scrolls through the stacked cards on every device */
     font-family: 'Georgia', serif;
     background: var(--card-bg);
 }
@@ -105,10 +105,9 @@ html, body {
 #app {
     position: relative;
     width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    display: block;
     background: var(--card-bg);
     opacity: 0;
     transition: opacity 0.6s ease;
@@ -119,7 +118,10 @@ html, body {
 }
 
 .envelope-container {
-    position: absolute;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 90vw;
     max-width: 450px;
     height: 60vh;
@@ -129,7 +131,6 @@ html, body {
     justify-content: center;
     align-items: center;
     transition: opacity 1s ease 1.5s;
-    margin-left: 20px;
 }
 
 .tap-hint {
@@ -184,121 +185,92 @@ html, body {
 .envelope-container.open { pointer-events: none; opacity: 0; }
 
 /* ============================================================
-   TIMER & SLIDER (EVENT VIEW)
+   COUNTDOWN STRIP & SLIDER (EVENT VIEW)
    ============================================================ */
+/* The countdown lives in the scroll flow, between the intro card
+   and the first event card. */
 #timer-container {
-    position: absolute;
-    top: 15px;
     width: 100%;
     text-align: center;
-    opacity: 0;
-    z-index: 50;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
+    padding: 30px 16px;
+    background: var(--card-bg);
+    border-top: 1px solid rgba(201, 168, 76, 0.3);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
 }
 
 .timer-label {
+    font-family: 'Montserrat', sans-serif;
     font-size: 0.68rem;
     color: #8d6e63;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 #timer-display {
     font-family: 'Great Vibes', cursive;
-    font-size: 1.05rem;
+    font-size: 1.35rem;
     color: var(--text-main);
     white-space: nowrap; /* Keep the countdown on a single line */
 }
 
+/* Cards stack top-to-bottom and the page scrolls. The column is
+   full width on phones and a fixed-width, centered column on PC. */
 .slider {
     position: relative;
-    width: 91vw;
-    max-width: 428px;
-    height: 82vh;
-    display: none;
-    margin-top: 15px;
-    touch-action: none;
-    user-select: none;
-}
-
-.swipe-hint {
-    position: absolute;
-    top: -45px;
-    left: 0;
     width: 100%;
-    text-align: center;
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.56rem;
-    color: var(--text-sub);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-    z-index: 20;
+    max-width: 428px;
+    margin: 0 auto;
+    display: none;
+    touch-action: auto;
 }
 
-.slider.show-swipe .swipe-hint {
-    opacity: 1;
-    animation: pulseHint 2s infinite;
+/* Once opened: the cards stack as a column with even breathing room
+   between them — the same kind of empty gap as around the countdown
+   strip — so every card sits comfortably apart. */
+.slider.opened {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding-bottom: 48px;
 }
-
-/* Peek animation to hint swiping for better UX */
-@keyframes cardPeek {
-    0% { transform: translateX(0); }
-    30% { transform: translateX(-60px); }
-    60% { transform: translateX(0); }
-    80% { transform: translateX(-20px); }
-    100% { transform: translateX(0); }
-}
-
-.peek-animation {
-    animation: cardPeek 1.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes pulseHint {
-    0%, 100% { opacity: 0.6; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(-5px); }
-}
-
 /* ============================================================
    CARD BASE STYLES
    ============================================================ */
+/* Full-bleed 9:16 cards stacked in the page flow — width-driven, so
+   the card looks identical on every device. The page scrolls through
+   them; a card scrolls as one piece (no inner scroll). */
 .card {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 9 / 16;
     background-color: var(--card-bg);
     background-size: 100% 100%;
     background-position: center;
-    border-radius: 20px;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding: 25px 20px;
-    opacity: 0;
-    transform: scale(0.9) translateY(30px);
-    transition: all 0.8s ease-out;
-    pointer-events: none;
-    overflow-y: auto;
-    scrollbar-width: none;    /* Firefox: hide the scrollbar */
-    -ms-overflow-style: none; /* Legacy Edge/IE: hide the scrollbar */
-}
-
-/* Chrome/Safari/new Edge: hide the scrollbar on cards.
-   Cards remain scrollable on small screens (overflow-y: auto above). */
-.card::-webkit-scrollbar {
-    display: none;
-}
-
-.card.active {
     opacity: 1;
-    transform: scale(1) translateY(0);
     pointer-events: auto;
-    z-index: 10;
+    overflow: hidden;
+}
+
+/* The first (Arabic calligraphy) card glides in gracefully just after
+   the envelope opens: 1.15s delay (the envelope halves take 1.2s to
+   slide apart) then a slow fade + gentle rise. 'both' fill keeps the
+   card hidden during the delay so it appears only when the envelope is
+   done opening. */
+@keyframes cardArrive {
+    from { opacity: 0; transform: translateY(55px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.slider.opened .card-intro {
+    animation: cardArrive 1.5s cubic-bezier(0.16, 1, 0.3, 1) 1.15s both;
 }
 
 .fade-text {
@@ -326,51 +298,6 @@ html, body {
 .delay-4 { transition-delay: 1.1s; }
 .delay-5 { transition-delay: 1.2s; }
 .delay-6 { transition-delay: 1.3s; }
-
-/* ---- GLOBAL TYPOGRAPHY INSIDE CARDS ---- */
-.card .label {
-    font-weight: 600;
-    color: #3e2c28;
-    font-size: 0.95rem;
-    letter-spacing: 0.5px;
-}
-
-.card .detail {
-    font-size: 1rem;
-    color: #4e342e;
-}
-
-/* ============================================================
-   LOCATION BUTTONS
-   ============================================================ */
-.location-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 24px;
-    border-radius: 50px;
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Georgia', serif;
-    font-size: 0.9rem;
-    margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(10px);
-    border: none;
-    cursor: pointer;
-}
-
-.active .location-pill {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 1s ease 1s, transform 1s ease 1s, background 0.3s ease;
-}
-
-.location-pill:hover {
-    transform: scale(1.05);
-}
 
 /* ============================================================
    [CUSTOMISE] CARD 0: INTRODUCTION
@@ -597,13 +524,9 @@ html, body {
     max-width: 280px;
     text-align: left;
     margin-top: 0; /* Reduced from 10px */
-    margin-bottom: 0 1px;
+    margin-bottom: 0;
     padding-right: 20px;
     margin-left: -10px; /* Small shift right */
-}
-
-.girls-code, .boys-code {
-    margin-bottom: 0 .3px;
 }
 
 .code-label {
@@ -624,14 +547,6 @@ html, body {
     text-underline-offset: 4px;
     margin-bottom: 3px;
 }
-
-.color-palette {
-  display: flex;
-  gap: 3px;
-  margin-top: 2px;
-  border: 3px solid #ccc; /* Width, style, and color */
-}
-
 
 .color-names-para {
     width: 68%;
@@ -789,26 +704,6 @@ html, body {
     line-height: 1.4;
 }
 
-.akt-location-btn {
-    background: #e2a188;
-    padding: 5px 20px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    z-index: 10;
-    transition: transform 0.3s ease;
-    width: fit-content;
-
-    /* New positioning rules */
-    position: fixed;
-    bottom: 90px; /* Adjust this to change distance from the very bottom */
-    transform: translateX(-50%);
-}
-
 /* ============================================================
    [CUSTOMISE] CARD 3: THE WEDDING
    ============================================================ */
@@ -907,21 +802,7 @@ html, body {
     font-weight: 400;
     padding: 0 5px;
     margin-top: 10px;
-    margin-top: 4;
     margin-bottom: 2px;
-}
-
-/* ============================================================
-   ARABIC INVITATION TEXT (shared by Akt & Wedding cards)
-   ============================================================ */
-.arabic-text {
-    font-family: 'Amiri', serif;
-    font-size: 0.72rem;
-    color: #3e2723;
-    text-align: center;
-    direction: rtl;
-    padding: 0 15px;
-    margin-bottom: 5px;
 }
 
 /* ============================================================
@@ -946,16 +827,6 @@ html, body {
 .card-walima.active .fade-text {
     opacity: 1 !important;
     transform: translateY(0) !important;
-}
-
-.walima-arabic {
-    font-family: 'Amiri', serif;
-    font-size: 0.72rem; /* Increased from 0.68rem for readability */
-    color: #3e2723;
-    text-align: center;
-    direction: rtl;
-    padding: 0 15px;
-    margin-bottom: 5px;
 }
 
 .walima-title-main {
@@ -1043,11 +914,6 @@ html, body {
     font-weight: 700;
 }
 
-/* Henna: blessings text sits inside the wrap, 3px below the pill button */
-.henna-btn-wrap .blessings-text {
-    position: static;
-}
-
 /* Walima: 'Blessings Only' stays at the bottom of the card (previous place) */
 .card-walima .blessings-text {
     position: absolute;
@@ -1057,17 +923,7 @@ html, body {
     font-weight: 500; /* Slightly lighter than the default 700 */
 }
 
-/* Desktop / tablets: keep the postcard at its native 9:16 portrait ratio
-   so it isn't stretched into a tall skinny shape on wide screens.
-   On phones (below 768px) the original 91vw x 82vh sizing is kept. */
-@media (min-width: 768px) {
-    .slider {
-        width: min(91vw, 428px, calc(82vh / 1.78));
-        height: min(82vh, calc(min(91vw, 428px) * 1.78));
-    }
-}
-
-/* Responsive scaling for mobile devices */
+/* Responsive scaling for small phones */
 @media (max-width: 480px) {
     .tap-hint { font-size: 1.6rem; top: -45px; }
     .quran-arabic { font-size: 1.2rem; }
