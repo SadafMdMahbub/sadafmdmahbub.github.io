@@ -326,7 +326,7 @@ html, body {
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: var(--text-main);
+    color: #730507;
     white-space: nowrap; /* Keeps the hint on a single line */
 }
 
@@ -1137,7 +1137,7 @@ html, body {
 .walima-gold-label {
     font-family: 'Montserrat', serif;
     font-size: 1rem; /* Increased from 0.7rem */
-    font-weight: 500; /* Bold like the "Kings Of Chittagong" venue name */
+    font-weight: 500; /* Bold like the "King Of Chittagong" venue name */
     color: #3e2723; /* Same color as the Walima Ceremony title font */
     text-align: center;
 }
@@ -1145,7 +1145,7 @@ html, body {
 .walima-gold-value {
     font-family: 'Montserrat', serif;
     font-size: 1rem; /* Increased from 0.7rem */
-    font-weight: 500; /* Bold like the "Kings Of Chittagong" venue name */
+    font-weight: 500; /* Bold like the "King Of Chittagong" venue name */
     color: #3e2723; /* Same color as the Walima Ceremony title font */
     text-align: center;
 }
