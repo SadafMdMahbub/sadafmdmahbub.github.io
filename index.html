@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Monte+Carlo&family=Amiri:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/style.css?v=1.0.74">
+    <link rel="stylesheet" href="css/style.css?v=1.0.75">
 </head>
 <body>
 
@@ -488,6 +488,11 @@
         app.classList.add('ready');
         updateCountdown();
         setInterval(updateCountdown, 60000);
+
+        // Open the envelope on a tap anywhere on the screen. Registered only
+        // after the loader fades away, and auto-removed after the first tap
+        // (once: true), so later taps land on the invitation cards instead.
+        document.addEventListener('click', () => openEnvelope(), { once: true });
     }
     init();
 </script>
