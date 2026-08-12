@@ -235,7 +235,7 @@
         <span class="scroll-hint-arrow">↓</span>
     </div>
 
-    <!-- Background music (plays at 36% volume, loops, starts when the invitation appears) -->
+    <!-- Background music (plays at 23% volume, loops, starts when the invitation appears) -->
     <audio id="bg-music" src="Wedding/BGMusicChaadBaliyan.mp3" loop preload="auto"></audio>
 
     <!-- Music toggle button pinned to the bottom-right corner -->
@@ -435,11 +435,12 @@
     }
 
     // ---- Background music ----
-    // Starts at 36% volume the moment the surah ends and the invitation
+    // Starts at 23% volume the moment the surah ends and the invitation
     // content appears, loops for the whole visit, pauses whenever the
     // guest leaves the tab/page, and can be muted via the bottom-right
-    // button.
-    bgMusic.volume = 0.36; // 36% volume
+    // button. The volume is relative to the guest's device volume, so it
+    // always plays at 23% of whatever the device is set to.
+    bgMusic.volume = 0.23; // 23% volume
     bgMusic.loop = true; // Keep replaying the track after it ends
 
     let musicStarted = false;
